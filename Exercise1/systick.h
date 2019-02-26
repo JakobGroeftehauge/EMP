@@ -2,45 +2,56 @@
 * University of Southern Denmark
 * Embedded Programming (EMP)
 *
-* MODULENAME.: emp.h
+* MODULENAME.: systick.h
 *
-* PROJECT....: Assingment 1
+* PROJECT....: EMP
 *
-* DESCRIPTION: Setup of systicktimer
+* DESCRIPTION: Initialize the systick interrupt.
 *
-* Change Log: 
+* Change Log:
 ******************************************************************************
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 190226  JGR    Module created.
+* 150215  MoH    Module created.
 *
 *****************************************************************************/
 
+#ifndef _EMP_H
+  #define _EMP_H
+
+/***************************** Include files *******************************/
 
 /*****************************    Defines    *******************************/
 
-#ifndef SYSTICKTIMER_H_
-#define SYSTICKTIMER_H_
+/*****************************   Constants   *******************************/
 
-
-
-extern void disable_global_int();
+/*****************************   Functions   *******************************/
+void enable_global_int();
 /*****************************************************************************
-*   Function : disable global interrupt
+*   Input    : -
+*   Output   : -
+*   Function : Enable global interrupt.
 ******************************************************************************/
 
-extern void enable_global_int();
+
+void disable_global_int();
 /*****************************************************************************
-*   Function : Enable global interrupt
+*   Input    : -
+*   Output   : -
+*   Function : Disable global interrupt.
 ******************************************************************************/
 
-extern void SysTickInit();
-/*****************************************************************************
-*   Function : Setup the systick timer  (interrupt mode)
-******************************************************************************/
 
+void init_systick();
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Initialize the systick interrupt.
+******************************************************************************/
 
 
 /****************************** End Of Module *******************************/
 #endif
+
+
