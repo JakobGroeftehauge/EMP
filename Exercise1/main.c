@@ -12,11 +12,14 @@
 
 #define DEBOUNCE_DELAY 2
 #define HOLD_DELAY 4000
+#define TIME_BETWEEN_DOUBLE_CLICK 400
 
     volatile uint8_t LEDList[8] = {0x00, 0x08, 0x04, 0x0C, 0x02, 0x0A, 0x06, 0x0E};
     volatile uint16_t counter = 0;
     volatile uint32_t tick;
     volatile uint16_t automode_tick=0;
+    volatile uint32_t Tick_double_click=0xFFFFFFFF;
+    volatile uint8_t direction=0;
 
 
 int main(void)
@@ -56,9 +59,19 @@ int main(void)
 
         if (auto_mode_enabled_flag == 1)
         {
-          if(automode_tick>0)
+          if(automode_tick>0 && direction == 0)
           {
               counter=(counter+1)%8;
+              automode_tick--;
+          }
+          if(automode_tick>0 && direction == 1)
+          {
+              if(counter == 0)
+               {
+                   counter=8;
+               }
+              counter--;
+
               automode_tick--;
           }
         }
@@ -83,6 +96,10 @@ int main(void)
             // check if button still pressed
             if(!(GPIO_PORTF_DATA_R & 0x10))
             {
+                if(tick-Tick_double_click<TIME_BETWEEN_DOUBLE_CLICK)
+                {
+                    direction=(direction+1)%2;
+                }
                 auto_mode_enabled_flag = 0;
                 // while pressed, do nothing
                 while(!(GPIO_PORTF_DATA_R & 0x10))
@@ -91,12 +108,23 @@ int main(void)
                        auto_mode_enabled_flag = 1;
                 }
                 // when released count up
-                if (!(auto_mode_enabled_flag == 1))
+                if (!(auto_mode_enabled_flag == 1) && direction==0)
                 {
                     counter = (counter + 1) % 8;
                 }
+                if (!(auto_mode_enabled_flag == 1) && direction==1)
+                {
+
+                    if(counter == 0)
+                    {
+                        counter =8;
+                    }
+                    counter--;
+                }
                 //GPIO_PORTF_DATA_R &= ~(0x0E);
+                Tick_double_click=tick;
             }
+
         }
     }
     return 0;
