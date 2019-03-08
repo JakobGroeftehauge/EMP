@@ -102,7 +102,7 @@ uint8_t select_button(void)
         if( ! button_pushed( ) )					// if button released
 		    {
 	        button_state = BS_IDLE;
-		      button_event = BE_DOUBBLE_PUSH;
+		      button_event = BE_DOUBLE_PUSH;
         }
 	    }
 	    break;

@@ -25,7 +25,7 @@
 #include "button.h"
 #include "GPIO.h"
 /*****************************    Defines    *******************************/
-
+#define BIT(x)              (0x01 << (x))
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -33,6 +33,32 @@ extern int16_t ticks;
 
 int main(void)
 {
+    uint8_t event;
+    uint8_t activated_lights;
+
+
+
     disable_global_int();
+    init_systick();
+    gpio_init();
+    enable_global_int();
+
+    // ------------------------------
+    while( !ticks );
+
+    // The following will be executed every 5mS
+    ticks--;
+
+    if( ! --alive_timer )
+    {
+      alive_timer        = TIM_500_MSEC;
+      GPIO_PORTD_DATA_R ^= 0x40;
+    }
+
+    event = select_button();
+    activated_lights = light_combination(event);
+    activate_LED(activated_lights);
+
+
 	return 0;
 }

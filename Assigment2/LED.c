@@ -1,47 +1,49 @@
 /*****************************************************************************
 * University of Southern Denmark
-* Embedded C Programming (ECP)
+* Embedded Programming (EMP)
 *
-* MODULENAME.: events.h
+* MODULENAME.: emp.c
 *
-* PROJECT....: ECP
+* PROJECT....: EMP
 *
-* DESCRIPTION: Test.
+* DESCRIPTION: See module specification file (.h-file).
 *
 * Change Log:
-******************************************************************************
+*****************************************************************************
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 090215  MoH   Module created.
+* 190306  MA    Module created.
 *
 *****************************************************************************/
 
-#ifndef EVENTS_H_
-#define EVENTS_H_
-
 /***************************** Include files *******************************/
-
 /*****************************    Defines    *******************************/
-// Events.
-// -------
 
-// General Events
-// --------------
-#define GE_NO_EVENT      0
-
-// Button Events
-// -------------
-#define BE_SINGLE_PUSH   1
-#define BE_DOUBLE_PUSH  2
-#define BE_LONG_PUSH     3
-
-// Timer Events
-// ------------
-#define TE_TIMEOUT      10
 /*****************************   Constants   *******************************/
 
+/*****************************   Variables   *******************************/
+
+
 /*****************************   Functions   *******************************/
+void activate_LED(uint8_t activated_lights)
+{
+    GPIO_PORTF_DATA_R |= (0x0E); // CLEAR LEDs
+    GPIO_PORTF_DATA_R &= ~(activated_lights);
+    return;
+}
+
+
 
 /****************************** End Of Module *******************************/
-#endif /*EVENTS_H_*/
+
+
+
+
+
+
+
+
+
+
+

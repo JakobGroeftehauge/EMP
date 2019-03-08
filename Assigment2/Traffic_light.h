@@ -1,10 +1,10 @@
 /*****************************************************************************
 * University of Southern Denmark
-* Embedded C Programming (ECP)
+* Embedded Programming (EMP)
 *
-* MODULENAME.: events.h
+* MODULENAME.: emp.h
 *
-* PROJECT....: ECP
+* PROJECT....: EMP
 *
 * DESCRIPTION: Test.
 *
@@ -13,35 +13,31 @@
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 090215  MoH   Module created.
+* 190308  MA    Module created.
 *
 *****************************************************************************/
-
-#ifndef EVENTS_H_
-#define EVENTS_H_
+#ifndef TRAFFIC_LIGHT_H_
+#define TRAFFIC_LIGHT_H_
 
 /***************************** Include files *******************************/
 
 /*****************************    Defines    *******************************/
-// Events.
-// -------
+#define LED_RED 1
+#define LED_YELLOW 2
+#define LED_GREEN 3
 
-// General Events
-// --------------
-#define GE_NO_EVENT      0
-
-// Button Events
-// -------------
-#define BE_SINGLE_PUSH   1
-#define BE_DOUBLE_PUSH  2
-#define BE_LONG_PUSH     3
-
-// Timer Events
-// ------------
-#define TE_TIMEOUT      10
 /*****************************   Constants   *******************************/
+enum state{
+    REGULAR_CYCLE,
+    NORWEGIAN,
+    EMERGENCY
+};
 
 /*****************************   Functions   *******************************/
 
+
 /****************************** End Of Module *******************************/
-#endif /*EVENTS_H_*/
+
+
+
+#endif /* TRAFFIC_LIGHT_H_ */
