@@ -1,7 +1,5 @@
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
-#include "emp_type.h"
-
 
 
 #define SYSTICK_RELOAD_VALUE 80000              // 5 mS
@@ -47,8 +45,6 @@ void disable_global_int()
   // disable interrupts.
   __asm("cpsid i");
 }
-
-
 
 
 void init_systick()

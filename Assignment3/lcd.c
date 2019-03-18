@@ -42,9 +42,9 @@ void port_init(void)
     uint8_t dummy;
 
     // Enable clock to port
-    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOC;
+    SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOC;
 
-    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOD;
+    SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOD;
 
     // Do a dummy read to insert a few cycles after enabling the peripheral.
     dummy = SYSCTL_RCGC2_R;
@@ -56,7 +56,7 @@ void port_init(void)
     GPIO_PORTC_DEN_R = 0xF0;
 
     // set PD2-PD3 as output
-    GPIO_PORTCD_DIR_R = 0x0C;
+    GPIO_PORTD_DIR_R = 0x0C;
 
     // enable
     GPIO_PORTD_DEN_R = 0x0C;
@@ -65,7 +65,7 @@ void port_init(void)
 }
 
 
-void ldc_init(void)
+void lcd_init(void)
 /*****************************************************************************
 *   Input    :
 *   Output   :
@@ -77,17 +77,142 @@ void ldc_init(void)
     // Clear high bits
     GPIO_PORTC_DATA_R &= ~(0xF0);
 
-    delay(8);
+    // Reset enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+
+    delay(10);
     // Set high bits
+    GPIO_PORTC_DATA_R &= ~(0xF0);
     GPIO_PORTC_DATA_R |= 0x30;
+
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
 
     delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
     GPIO_PORTC_DATA_R |= 0x30;
 
-    delay(1);
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
     GPIO_PORTC_DATA_R |= 0x30;
 
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+
+    GPIO_PORTC_DATA_R &= ~(0xF0);
+    // set 4-bit mode
     GPIO_PORTC_DATA_R |= 0x20;
+
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+//------------------- STEP 5 ---------------------------------
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+    GPIO_PORTC_DATA_R &= ~(0xF0);
+    GPIO_PORTC_DATA_R |= 0x20;
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+    GPIO_PORTC_DATA_R &= ~(0xF0);
+    GPIO_PORTC_DATA_R |= 0x80;
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+//--------------------------------------------------------------------------------------
+
+//--------------------- STEP 6 ---------------------------------------
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+    GPIO_PORTC_DATA_R &= ~(0xF0);
+    GPIO_PORTC_DATA_R |= 0x00;
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+    delay(2);
+    // clear RS and enable
+    GPIO_PORTD_DATA_R &= ~(0x0C);
+    GPIO_PORTC_DATA_R &= ~(0xF0);
+    GPIO_PORTC_DATA_R |= 0x80;
+    //set enable
+    GPIO_PORTD_DATA_R |= (0x08);
+
+ //------------------------------------------------------------------
+
+ //------------------------ STEP 7 ----------------------------------
+    delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0x00;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0xC0;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+ //------------------------------------------------------------------
+
+ //------------------------ STEP 8 ----------------------------------
+    delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0x00;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0x60;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+ //------------------------------------------------------------------
+
+ //------------------------ STEP 8 ----------------------------------
+    delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0x00;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= 0x10;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+
+
+
 
 
 }
@@ -96,7 +221,31 @@ void ldc_init(void)
 /*****************************************************************************
 *   Function : See module specification (.h-file).
 *****************************************************************************/
+void send_H()
+{
+    delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
 
+     GPIO_PORTD_DATA_R |= 0x04;
+     GPIO_PORTC_DATA_R |= 0x40;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+
+     GPIO_PORTD_DATA_R |= 0x04;
+     GPIO_PORTC_DATA_R |= 0x80;
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+}
 
 /****************************** End Of Module *******************************/
 
