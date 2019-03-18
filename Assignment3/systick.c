@@ -13,6 +13,7 @@
 #define SYSTICK_PRIORITY    0x7E
 
 volatile int16_t ticks = 0;
+volatile int16_t delay_ticks = 0;
 
 void systick_handler(void)
 /*****************************************************************************
@@ -21,7 +22,18 @@ void systick_handler(void)
 {
   // Hardware clears systick int request
   ticks++;
+  delay_ticks++;
 }
+
+void delay(uint8_t time)
+{
+    delay_ticks = 0;
+    while(delay_ticks < time)
+    {
+        ;
+    }
+}
+
 
 
 void enable_global_int()

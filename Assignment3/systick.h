@@ -51,6 +51,8 @@ void init_systick();
 *   Function : Initialize the systick interrupt.
 ******************************************************************************/
 
+void delay(uint8_t time);
+
 
 /****************************** End Of Module *******************************/
 #endif
