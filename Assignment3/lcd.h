@@ -23,6 +23,9 @@
 
 /*****************************    Defines    *******************************/
 
+#define RIGHT_SHIFT 1
+#define LEFT_SHIFT 0
+
 /********************** External declaration of Variables ******************/
 
 /*****************************   Constants   *******************************/
@@ -35,8 +38,17 @@ extern void lcd_init(void);
 *   Output   : -
 *   Function : I
 ******************************************************************************/
+extern void return_home();
+
+extern void shift_cursor(uint8_t, uint8_t);
+
+extern void set_cursor(uint8_t position);
+
+extern void clear_display();
 
 extern void send_H();
+
+extern void write_data(uint8_t);
 
 /****************************** End Of Module *******************************/
 

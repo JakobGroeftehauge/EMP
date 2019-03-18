@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
 #include "systick.h"
+#include "lcd.h"
 
 /*****************************    Defines    *******************************/
 
@@ -63,6 +64,24 @@ void port_init(void)
 
 
 }
+
+void write_data(uint8_t data)
+{
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= (data & 0xF0);
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+
+     delay(2);
+     // clear RS and enable
+     GPIO_PORTD_DATA_R &= ~(0x0C);
+     GPIO_PORTC_DATA_R &= ~(0xF0);
+     GPIO_PORTC_DATA_R |= ((data & 0x0F)<<4);
+     //set enable
+     GPIO_PORTD_DATA_R |= (0x08);
+}
+
 
 
 void lcd_init(void)
@@ -116,111 +135,58 @@ void lcd_init(void)
     //set enable
     GPIO_PORTD_DATA_R |= (0x08);
 
-//------------------- STEP 5 ---------------------------------
+//------------------------- STEP 5 ---------------------------------
     delay(2);
-    // clear RS and enable
-    GPIO_PORTD_DATA_R &= ~(0x0C);
-    GPIO_PORTC_DATA_R &= ~(0xF0);
-    GPIO_PORTC_DATA_R |= 0x20;
-    //set enable
-    GPIO_PORTD_DATA_R |= (0x08);
+    write_data(0x28);
 
+//------------------------- STEP 6 ---------------------------------
     delay(2);
-    // clear RS and enable
-    GPIO_PORTD_DATA_R &= ~(0x0C);
-    GPIO_PORTC_DATA_R &= ~(0xF0);
-    GPIO_PORTC_DATA_R |= 0x80;
-    //set enable
-    GPIO_PORTD_DATA_R |= (0x08);
-
-//--------------------------------------------------------------------------------------
-
-//--------------------- STEP 6 ---------------------------------------
-    delay(2);
-    // clear RS and enable
-    GPIO_PORTD_DATA_R &= ~(0x0C);
-    GPIO_PORTC_DATA_R &= ~(0xF0);
-    GPIO_PORTC_DATA_R |= 0x00;
-    //set enable
-    GPIO_PORTD_DATA_R |= (0x08);
-
-    delay(2);
-    // clear RS and enable
-    GPIO_PORTD_DATA_R &= ~(0x0C);
-    GPIO_PORTC_DATA_R &= ~(0xF0);
-    GPIO_PORTC_DATA_R |= 0x80;
-    //set enable
-    GPIO_PORTD_DATA_R |= (0x08);
-
- //------------------------------------------------------------------
+    write_data(0x08);
 
  //------------------------ STEP 7 ----------------------------------
     delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0x00;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
-
-     delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0xC0;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
-
- //------------------------------------------------------------------
+     write_data(0x0C);
 
  //------------------------ STEP 8 ----------------------------------
     delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0x00;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
+    write_data(0x06);
 
+ //------------------------ STEP 9 ----------------------------------
      delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0x60;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
-
- //------------------------------------------------------------------
-
- //------------------------ STEP 8 ----------------------------------
-    delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0x00;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
-
-     delay(2);
-     // clear RS and enable
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-     GPIO_PORTC_DATA_R &= ~(0xF0);
-     GPIO_PORTC_DATA_R |= 0x10;
-     //set enable
-     GPIO_PORTD_DATA_R |= (0x08);
-
-     GPIO_PORTD_DATA_R &= ~(0x0C);
-
-
-
-
-
+     write_data(0x01);
 }
 
 
 /*****************************************************************************
 *   Function : See module specification (.h-file).
 *****************************************************************************/
+void return_home()
+{
+    write_data(0x02);
+}
+
+void shift_cursor(uint8_t total_shift, uint8_t direction)
+{
+    uint8_t shifts;
+    for( shifts = 0; shifts < total_shift; shifts++ )
+    {
+       delay(2);
+       write_data(0x10 | (direction << 2));
+    }
+}
+
+void set_cursor(uint8_t position)
+{
+    delay(2);
+    return_home();
+    shift_cursor(position, RIGHT_SHIFT);
+}
+
+void clear_display()
+{
+    write_data(0x01);
+}
+
 void send_H()
 {
     delay(2);
