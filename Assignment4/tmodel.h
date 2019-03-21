@@ -29,6 +29,8 @@
 #define TASK_SW_TIMERS   11
 #define TASK_MAIN        12
 #define TASK_BUTTON      13
+#define TASK_MSG_DEC     14
+#define TASK_UART0       15
 
 
 // Interrupt Service Routines.
@@ -63,6 +65,8 @@
 // QUEUEs.
 // -------
 #define Q_OUTPUT 1
+#define Q_TX 2
+#define Q_RX 3
 
 // Traffic Light Modes.
 // --------------------

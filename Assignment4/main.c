@@ -7,6 +7,8 @@
 #include "swtimers.h"
 #include "tmodel.h"
 #include "messages.h"
+#include "uart0.h"
+#include "msg_decoder.h"
 
 
 INT16S alive_timer = MILLISEC(500);
@@ -24,11 +26,14 @@ int main(void)
   disable_global_int();
   init_systick();
   init_gpio();
+  uart0_init(19200, 8, 1,'o');
   enable_global_int();
 
   signal( MUTEX_SYSTEM_RTC );
   signal( MUTEX_LCD_DISPLAY );
   signal( SEM_RTC_UPDATED );
+  queue_open(Q_RX);
+  queue_open(Q_TX);
 
   // Loop forever.
   while(1)
@@ -50,10 +55,16 @@ int main(void)
     swt_ctrl();
 
     // Application mode
-    button_task( TASK_BUTTON );
+    //button_task( TASK_BUTTON );
+
+    //uart0_putc('c');
+
+    msg_decoder_task(TASK_MSG_DEC);
+    uart0_task(TASK_MSG_DEC);
+
     rtc_task( TASK_RTC );
     display_rtc_task( TASK_RTC_DISPLAY );
-    ajust_rtc_task( TASK_RTC_ADJUST );
+    //ajust_rtc_task( TASK_RTC_ADJUST );
     lcd_task( TASK_LCD );
 
   }
