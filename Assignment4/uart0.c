@@ -23,6 +23,7 @@
 #include "emp_type.h"
 #include "tmodel.h"
 #include "queue.h"
+#include "sem.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -193,7 +194,7 @@ extern void uart0_init( INT32U baud_rate, INT8U databits, INT8U stopbits, INT8U 
 
 extern void uart0_task(INT8U task_no)
 {
-    static INT8U state =1;
+    static INT8U state =0;
 
     switch(state)
     {
@@ -202,20 +203,30 @@ extern void uart0_task(INT8U task_no)
             state = 1;
             break;
         case 1:
-            //include semaphores
-            if (queue_test(Q_TX))
+            if (wait(SEM_TX_Q))
             {
-                if(uart0_tx_rdy())
+                if (queue_test(Q_TX))
                 {
-                    uart0_putc(queue_get(Q_TX));
-                }
+                    if(uart0_tx_rdy())
+                    {
+                        uart0_putc(queue_get(Q_TX));
+                    }
 
+                }
+                signal(SEM_TX_Q);
             }
-            else if (uart0_rx_rdy())
+            if(wait(SEM_RX_Q))
             {
+                if (uart0_rx_rdy())
+                {
                   queue_put(Q_RX, uart0_getc());
+                }
+                signal(SEM_RX_Q);
             }
          break;
+
+        default:
+            break;
     }
 
 }

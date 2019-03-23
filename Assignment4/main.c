@@ -26,12 +26,14 @@ int main(void)
   disable_global_int();
   init_systick();
   init_gpio();
-  uart0_init(19200, 8, 1,'o');
+  //uart0_init(19200, 8, 1,'o');
   enable_global_int();
 
   signal( MUTEX_SYSTEM_RTC );
   signal( MUTEX_LCD_DISPLAY );
   signal( SEM_RTC_UPDATED );
+  signal( SEM_TX_Q);
+  signal( SEM_RX_Q);
   queue_open(Q_RX);
   queue_open(Q_TX);
 

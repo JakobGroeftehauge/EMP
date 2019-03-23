@@ -61,6 +61,8 @@
 #define MUTEX_LCD_DISPLAY 4
 #define MUTEX_SYSTEM_RTC  5
 #define SEM_LCD_DISPLAY   6
+#define SEM_TX_Q          7
+#define SEM_RX_Q          8
 
 // QUEUEs.
 // -------
