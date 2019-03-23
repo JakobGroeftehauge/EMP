@@ -24,7 +24,7 @@ extern void msg_decoder_task( INT8U );
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
-*   Function : Initialize uart 0
+*   Function : Handles decoding the incoming message based on the supplied protocol
 ******************************************************************************/
 
 #endif

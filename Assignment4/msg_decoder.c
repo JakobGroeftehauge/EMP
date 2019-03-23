@@ -13,7 +13,7 @@
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 150228  MoH   Module created.
+* 190321  MA    Module Created
 *
 *****************************************************************************/
 
@@ -49,6 +49,11 @@
 /*****************************   Functions   *******************************/
 
 void msg_decoder_task(INT8U task_no)
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Handles decoding the incoming message based on the supplied protocol
+******************************************************************************/
 {
     static INT8U sec = 0;
     static INT8U min = 0;
@@ -156,7 +161,6 @@ void msg_decoder_task(INT8U task_no)
         case DS_SET_CLOCK6:
             if(wait(MUTEX_SYSTEM_RTC))
             {
-                // include mutex for system RTC
                 put_msg_state( SSM_RTC_SEC, sec );
                 put_msg_state( SSM_RTC_MIN, min );
                 put_msg_state( SSM_RTC_HOUR, hour );
@@ -166,7 +170,6 @@ void msg_decoder_task(INT8U task_no)
             break;
 
         case DS_GET_CLOCK:
-            // include mutex
             if (wait(MUTEX_SYSTEM_RTC))
             {
                 if (wait(SEM_TX_Q))
