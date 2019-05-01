@@ -17,11 +17,13 @@
 #include "semphr.h"
 
 /* Hardware includes. */
-//#include "hardware_tm4c123g.h" // Requires TivaWare library
-//#include "systick_frt.h"    // From Mortens Lessons
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 
+/* Application includes */
+#include "system_setup.h"
+#include "pump_emulator.h"
+#include "encoder.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -30,15 +32,11 @@
 #define MED_PRIO  2
 #define HIGH_PRIO 3
 
-#define GREEN_LED_TASK 2
-#define YELLOW_LED_TASK 3
-
 
 /*****************************   Constants   *******************************/
 SemaphoreHandle_t taskSignalSem;
 /*****************************   Variables   *******************************/
 
-//uint32_t SystemCoreClock;
 
 /*****************************   Functions   *******************************/
 
@@ -47,15 +45,15 @@ SemaphoreHandle_t taskSignalSem;
 int main(void)
 {
     init_gpio();
+    init_system_parameter();
 
     //Create semaphores
-
+    setup_semaphores();
 
 
     // Start the tasks.
-
-
-
+    xTaskCreate(pump_emulator_task, "Pump emulator", 100, 0, 1, &PUMP_EMULATOR_TASK_HANDLE);
+    xTaskCreate(encoder_task, "Encoder Task", 100, 0, 1, &ENCODER_TASK_HANDLE);
 
     // Start the scheduler.
     // --------------------
