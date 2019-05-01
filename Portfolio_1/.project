@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Portfolio_1</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.ti.ccstudio.core.ccsNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>FPGA_comp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-ORIGINAL_PROJECT_ROOT/C%20libraries/FPGA_comp.c</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>ORIGINAL_PROJECT_ROOT</name>
+			<value>file:/C:/Users/Jakob/Google%20Drive/01%20SDU/04%204.%20Semester/05%204.%20semesterprojekt/4-semester-project/Position_controller_FreeRTOS</value>
+		</variable>
+	</variableList>
+</projectDescription>
