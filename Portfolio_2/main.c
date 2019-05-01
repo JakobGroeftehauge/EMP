@@ -24,6 +24,7 @@
 #include "system_setup.h"
 #include "pump_emulator.h"
 #include "encoder.h"
+#include "pump_handler.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -52,8 +53,11 @@ int main(void)
 
 
     // Start the tasks.
+
     xTaskCreate(pump_emulator_task, "Pump emulator", 100, 0, 1, &PUMP_EMULATOR_TASK_HANDLE);
     xTaskCreate(encoder_task, "Encoder Task", 100, 0, 1, &ENCODER_TASK_HANDLE);
+    xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
+
 
     // Start the scheduler.
     // --------------------
