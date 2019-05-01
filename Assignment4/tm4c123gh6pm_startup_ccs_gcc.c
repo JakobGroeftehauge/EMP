@@ -34,7 +34,7 @@ static void NmiSR(void);
 static void FaultISR(void);
 static void IntDefaultHandler(void);
 
-void systick_handler(void);
+extern void systick_handler(void);
 
 #ifndef HWREG
 #define HWREG(x) (*((volatile uint32_t *)(x)))
