@@ -23,9 +23,14 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 /*****************************    Defines    *******************************/
-
 #define TRUE  1
 #define FALSE 0
+
+#define Fuel_92   1
+#define Fuel_95   2
+#define Fuel_E10  3
+
+#define TICK_PER_LITER            1125
 /********************** External declaration of Variables ******************/
 
 // State buffers:
@@ -66,10 +71,19 @@ extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 
+/**************************   Task Handles    ******************************/
+
 extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 extern TaskHandle_t ENCODER_TASK_HANDLE;
 extern TaskHandle_t PUMP_TASK_HANDLE;
 extern TaskHandle_t BUTTON_DRIVER_HANDLE;
+extern TaskHandle_t PRICE_CALCULATOR_TASK;
+
+/**************************   Queue Handles    ******************************/
+
+extern QueueHandle_t UART_RX_QUEUE_HANDLE;
+extern QueueHandle_t UART_RX_QUEUE_HANDLE;
+extern QueueHandle_t KEYBOARD_QUEUE_HANDLE;
 
 /*****************************   Constants   *******************************/
 
@@ -81,6 +95,14 @@ extern void setup_semaphores();
 *   Output   : -
 *   Function : Test function
 ******************************************************************************/
+
+extern void setup_queues();
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Test function
+******************************************************************************/
+
 
 extern void init_system_parameter();
 /*****************************************************************************

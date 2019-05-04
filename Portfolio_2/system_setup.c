@@ -34,7 +34,11 @@ TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 TaskHandle_t ENCODER_TASK_HANDLE;
 TaskHandle_t PUMP_TASK_HANDLE;
 TaskHandle_t BUTTON_DRIVER_HANDLE;
+TaskHandle_t PRICE_CALCULATOR_TASK;
 
+QueueHandle_t UART_RX_QUEUE_HANDLE;
+QueueHandle_t UART_RX_QUEUE_HANDLE;
+QueueHandle_t KEYBOARD_QUEUE_HANDLE;
 /*****************************   Functions   *******************************/
 
 void setup_semaphores()
@@ -53,6 +57,16 @@ void setup_semaphores()
     AMOUNT_PUMPED_SEM = xSemaphoreCreateCounting(1, 1);
 }
 
+void setup_queues()
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Test function
+******************************************************************************/
+{
+
+}
+
 void init_system_parameter()
 /*****************************************************************************
 *   Input    : -
@@ -60,8 +74,7 @@ void init_system_parameter()
 *   Function : Test function
 ******************************************************************************/
 {
-    AMOUNT_PUMPED_SEM = 0;
-    //AMOUNT_FUEL_PAID = 0;
+
     Motor_ON = 0;
     Flow_ON = 0;
     Shunt_ON = 0;

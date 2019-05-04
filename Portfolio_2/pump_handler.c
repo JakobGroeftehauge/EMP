@@ -37,7 +37,7 @@
 
 #define MAX_DEACTIVATION_TIME     15000  //when schedueled every 1ms
 #define SHUNT_ACTIVATION_PERIOD   5000   //when schedueled every 1 ms
-#define TICK_PER_LITER            1125
+//#define TICK_PER_LITER            1125
 #define DELAY_TIME                1 //ms
 /*****************************   Constants   *******************************/
 
