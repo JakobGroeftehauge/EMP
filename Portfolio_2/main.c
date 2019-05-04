@@ -25,6 +25,7 @@
 #include "pump_emulator.h"
 #include "encoder.h"
 #include "pump_handler.h"
+#include "Button_driver.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -57,7 +58,7 @@ int main(void)
     xTaskCreate(pump_emulator_task, "Pump emulator", 100, 0, 1, &PUMP_EMULATOR_TASK_HANDLE);
     xTaskCreate(encoder_task, "Encoder Task", 100, 0, 1, &ENCODER_TASK_HANDLE);
     xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
-
+    xTaskCreate(button_driver_task, "Button driver task", 10, 0, 1, &BUTTON_DRIVER_HANDLE);
 
     // Start the scheduler.
     // --------------------

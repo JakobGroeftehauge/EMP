@@ -2,7 +2,7 @@
 * University of Southern Denmark
 * Embedded Programming (EMP)
 *
-* MODULENAME.: pump_emulator.c
+* MODULENAME.: price_calculator.c
 *
 * PROJECT....: Portfolio 2
 *
@@ -13,18 +13,17 @@
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 190501  JGR    Module created.
+* 190504  JGR    Module created.
 *
 *****************************************************************************/
 
 /***************************** Include files *******************************/
 #include <stdint.h>
-#include "pump_emulator.h"
 #include "system_setup.h"
-#include "FreeRTOS.h"
-
+#include "tm4c123gh6pm.h"
 /*****************************    Defines    *******************************/
-#define TIME_BETWEEN_PULSES 4 //4ms - maybe needs to be corrected to accomodate specifications.
+#define OFF 0
+#define ON  1
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -32,64 +31,37 @@
 
 /*****************************   Functions   *******************************/
 
-void pump_emulator_task(void *pvParameters)
+void price_calulator_task(void* pvParameters)
 /*****************************************************************************
-*   Input    :
-*   Output   :
-*   Function :
+*   Input    : -
+*   Output   : -
+*   Function : Test function
 ******************************************************************************/
 {
-    uint8_t delta_time;
-    uint8_t power_state;
-    TickType_t xLastWakeTime;
+    uint8_t state = OFF;
 
     for(;;)
     {
 
-    power_state = (Motor_ON > 0);
-    xLastWakeTime = xTaskGetTickCount();
-
-
-    switch(power_state)
+    switch(state)
     {
-    case 1:
-        //RED LED ON
-        if(Flow_ON > 0)
-        {
+    case OFF:
 
-            if(Shunt_ON > 0)
-            {
-                delta_time = 5 * TIME_BETWEEN_PULSES;
-            }
-            else
-            {
-                delta_time = TIME_BETWEEN_PULSES;
-            }
+    break;
 
-            xTaskNotifyGive(ENCODER_TASK_HANDLE);
-
-        }
-        break;
+    case ON:
+    break;
 
     default:
-        //RED LED OFF
-        delta_time = TIME_BETWEEN_PULSES;
-        break;
+    break;
+
+
     }
 
-    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time));
 
     }
 }
+
+
 /****************************** End Of Module *******************************/
-
-
-
-
-
-
-
-
-
-
 

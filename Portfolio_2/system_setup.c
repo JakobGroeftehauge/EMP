@@ -27,11 +27,14 @@
 /*****************************   Variables   *******************************/
 SemaphoreHandle_t MOTOR_ON_SEM;
 SemaphoreHandle_t FLOW_ON_SEM;
-SemaphoreHandle_t PUMP_ENCODER_TICKS_SEM;
+SemaphoreHandle_t AMOUNT_PUMPED_SEM;
+SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 
 TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 TaskHandle_t ENCODER_TASK_HANDLE;
 TaskHandle_t PUMP_TASK_HANDLE;
+TaskHandle_t BUTTON_DRIVER_HANDLE;
+
 /*****************************   Functions   *******************************/
 
 void setup_semaphores()
@@ -44,9 +47,10 @@ void setup_semaphores()
     //SIGNALING SEMAPHORES
     MOTOR_ON_SEM = xSemaphoreCreateCounting(1, 0);
     FLOW_ON_SEM = xSemaphoreCreateCounting(1, 0);
+    ACTIVATE_PUMP_HANDLER_SEM = xSemaphoreCreateCounting(1,0);
 
     //MUTEXS
-    PUMP_ENCODER_TICKS_SEM = xSemaphoreCreateCounting(1, 1);
+    AMOUNT_PUMPED_SEM = xSemaphoreCreateCounting(1, 1);
 }
 
 void init_system_parameter()
@@ -56,9 +60,10 @@ void init_system_parameter()
 *   Function : Test function
 ******************************************************************************/
 {
-    PUMP_ENCODER_TICKS = 0;
-    MOTOR_ON = 0;
-    FLOW_ON = 0;
-    SHUNT_ON = 0;
+    AMOUNT_PUMPED_SEM = 0;
+    //AMOUNT_FUEL_PAID = 0;
+    Motor_ON = 0;
+    Flow_ON = 0;
+    Shunt_ON = 0;
 }
 /****************************** End Of Module *******************************/

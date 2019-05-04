@@ -24,23 +24,52 @@
 #include "semphr.h"
 /*****************************    Defines    *******************************/
 
+#define TRUE  1
+#define FALSE 0
 /********************** External declaration of Variables ******************/
-uint8_t MOTOR_ON;
-uint8_t FLOW_ON;
-uint8_t SHUNT_ON;
 
-uint32_t PUMP_ENCODER_TICKS;
+// State buffers:
+
+uint8_t Hook_Activated;
+uint8_t Handle_Activated;
+uint8_t Flow_ON;
+uint8_t Motor_ON;
+uint8_t Shunt_ON;
+
+uint8_t Fuel_Type;
+uint8_t Fuel_Price_92;
+uint8_t Fuel_Price_95;
+uint8_t Fuel_Price_E10;
+
+uint16_t Amount_Pumped;
+uint16_t Balance;
+uint16_t Current_Price;
+uint16_t Real_Time_Clock;
+
+
+//Event buffers:
+
+uint16_t Money_Paid;
+
+
+//uint8_t MOTOR_ON;
+//uint8_t FLOW_ON;
+//uint8_t SHUNT_ON;
+//
+//uint32_t PUMP_ENCODER_TICKS;
+//uint32_t AMOUNT_FUEL_PAID;
 
 /**************************   Semaphore Handles    *************************/
 
 extern SemaphoreHandle_t MOTOR_ON_SEM;
 extern SemaphoreHandle_t FLOW_ON_SEM;
-extern SemaphoreHandle_t PUMP_ENCODER_TICKS_SEM;
-
+extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
+extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 
 extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 extern TaskHandle_t ENCODER_TASK_HANDLE;
 extern TaskHandle_t PUMP_TASK_HANDLE;
+extern TaskHandle_t BUTTON_DRIVER_HANDLE;
 
 /*****************************   Constants   *******************************/
 

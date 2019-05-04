@@ -41,9 +41,9 @@ void encoder_task(void* pvParameters)
 
         ulTaskNotifyTake(pdFALSE, portMAX_DELAY);
 
-        xSemaphoreTake(PUMP_ENCODER_TICKS_SEM, portMAX_DELAY);
-        PUMP_ENCODER_TICKS++;
-        xSemaphoreGive(PUMP_ENCODER_TICKS_SEM);
+        xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
+        Amount_Pumped++;
+        xSemaphoreGive(AMOUNT_PUMPED_SEM);
 
     }
 }

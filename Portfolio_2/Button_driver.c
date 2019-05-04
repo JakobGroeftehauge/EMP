@@ -2,7 +2,7 @@
 * University of Southern Denmark
 * Embedded Programming (EMP)
 *
-* MODULENAME.: pump_emulator.c
+* MODULENAME.: Button_driver.c
 *
 * PROJECT....: Portfolio 2
 *
@@ -13,18 +13,18 @@
 * Date    Id    Change
 * YYMMDD
 * --------------------
-* 190501  JGR    Module created.
+* 190504  JGR    Module created.
 *
 *****************************************************************************/
 
 /***************************** Include files *******************************/
 #include <stdint.h>
-#include "pump_emulator.h"
 #include "system_setup.h"
-#include "FreeRTOS.h"
-
+#include "tm4c123gh6pm.h"
 /*****************************    Defines    *******************************/
-#define TIME_BETWEEN_PULSES 4 //4ms - maybe needs to be corrected to accomodate specifications.
+
+#define OFF 0
+#define ON  1
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -32,64 +32,65 @@
 
 /*****************************   Functions   *******************************/
 
-void pump_emulator_task(void *pvParameters)
+uint8_t sw1_pressed()
+{
+    return( !(GPIO_PORTF_DATA_R & 0x10) );
+}
+
+uint8_t sw2_pressed()
+{
+    return( !(GPIO_PORTF_DATA_R & 0x01) );
+}
+
+void button_driver_task(void* pvParameters)
 /*****************************************************************************
-*   Input    :
-*   Output   :
-*   Function :
+*   Input    : -
+*   Output   : -
+*   Function : Test function
 ******************************************************************************/
 {
-    uint8_t delta_time;
-    uint8_t power_state;
-    TickType_t xLastWakeTime;
+    uint8_t sw2_state = OFF;
 
     for(;;)
     {
 
-    power_state = (Motor_ON > 0);
-    xLastWakeTime = xTaskGetTickCount();
-
-
-    switch(power_state)
+    if(sw1_pressed())
     {
-    case 1:
-        //RED LED ON
-        if(Flow_ON > 0)
+    Handle_Activated = TRUE;
+    }
+    else
+    {
+    Handle_Activated = FALSE;
+    }
+
+    switch(sw2_state)
+    {
+
+    case OFF:
+
+        Hook_Activated = FALSE;
+
+        if(sw2_pressed())
         {
-
-            if(Shunt_ON > 0)
-            {
-                delta_time = 5 * TIME_BETWEEN_PULSES;
-            }
-            else
-            {
-                delta_time = TIME_BETWEEN_PULSES;
-            }
-
-            xTaskNotifyGive(ENCODER_TASK_HANDLE);
-
+            sw2_state = ON;
         }
-        break;
+    case ON:
 
-    default:
-        //RED LED OFF
-        delta_time = TIME_BETWEEN_PULSES;
-        break;
+        Hook_Activated = TRUE;
+
+        if(sw2_pressed())
+        {
+            sw2_state = OFF;
+        }
     }
 
-    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time));
+    vTaskDelay(pdMS_TO_TICKS(5));
 
     }
+
+
 }
+
+
+
 /****************************** End Of Module *******************************/
-
-
-
-
-
-
-
-
-
-
-
