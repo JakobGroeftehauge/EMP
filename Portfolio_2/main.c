@@ -20,6 +20,7 @@
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 #include "key.h"
+#include "uart_protocol.h"
 
 /* Application includes */
 #include "system_setup.h"
@@ -50,6 +51,7 @@ SemaphoreHandle_t taskSignalSem;
 int main(void)
 {
     init_gpio();
+    uart0_init(9600, 8,1,0);
     init_system_parameter();
 
     //Create semaphores
@@ -65,6 +67,8 @@ int main(void)
     xTaskCreate(price_calulator_task, "Price Calculator Task", 10, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
     xTaskCreate(RTC_task, "RTC task", 10, 0, 1, &RTC_CLOCK_TASK_HANDLE);
     xTaskCreate(key_task, "Keyboard Task", 20, 0, 1, &KEYBOARD_TASK);
+    xTaskCreate(UARTRX, "UART receive", 20, 0, 1, &UART_RX_HANDLE);
+    xTaskCreate(UARTTX, "UART Transmit", 20, 0, 1, &UART_TX_HANDLE);
     // Start the scheduler.
     // --------------------
     vTaskStartScheduler();
