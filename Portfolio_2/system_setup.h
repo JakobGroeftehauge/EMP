@@ -50,7 +50,12 @@ uint16_t Amount_Pumped;
 uint16_t Amount_to_pump;
 uint16_t Balance;
 uint16_t Current_Price;
-uint16_t Real_Time_Clock;
+
+uint8_t RTC_sek;
+uint8_t RTC_min;
+uint8_t RTC_hour;
+
+
 
 
 //Event buffers:
@@ -71,6 +76,7 @@ extern SemaphoreHandle_t MOTOR_ON_SEM;
 extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
+extern SemaphoreHandle_t RTC_SEM;
 
 /**************************   Task Handles    ******************************/
 
@@ -78,7 +84,8 @@ extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 extern TaskHandle_t ENCODER_TASK_HANDLE;
 extern TaskHandle_t PUMP_TASK_HANDLE;
 extern TaskHandle_t BUTTON_DRIVER_HANDLE;
-extern TaskHandle_t PRICE_CALCULATOR_TASK;
+extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
+extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 
