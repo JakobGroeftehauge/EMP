@@ -47,6 +47,7 @@ uint8_t Fuel_Price_95;
 uint8_t Fuel_Price_E10;
 
 uint16_t Amount_Pumped;
+uint16_t Amount_to_pump;
 uint16_t Balance;
 uint16_t Current_Price;
 uint16_t Real_Time_Clock;
