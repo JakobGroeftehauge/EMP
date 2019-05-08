@@ -19,6 +19,7 @@
 /* Hardware includes. */
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
+#include "key.h"
 
 /* Application includes */
 #include "system_setup.h"
@@ -63,6 +64,7 @@ int main(void)
     xTaskCreate(button_driver_task, "Button driver task", 10, 0, 1, &BUTTON_DRIVER_HANDLE);
     xTaskCreate(price_calulator_task, "Price Calculator Task", 10, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
     xTaskCreate(RTC_task, "RTC task", 10, 0, 1, &RTC_CLOCK_TASK_HANDLE);
+    xTaskCreate(key_task, "Keyboard Task", 20, 0, 1, &KEYBOARD_TASK);
     // Start the scheduler.
     // --------------------
     vTaskStartScheduler();

@@ -84,8 +84,10 @@ extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 extern TaskHandle_t ENCODER_TASK_HANDLE;
 extern TaskHandle_t PUMP_TASK_HANDLE;
 extern TaskHandle_t BUTTON_DRIVER_HANDLE;
+
 extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
+extern TaskHandle_t KEYBOARD_TASK;
 
 /**************************   Queue Handles    ******************************/
 

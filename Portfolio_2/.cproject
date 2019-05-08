@@ -39,12 +39,13 @@
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.489004105" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="PART_TM4C123GH6PM"/>
 								</option>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.443258699" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.443258699" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="C:\Users\Jakob\Google Drive\01 SDU\04 4. Semester\05 4. semesterprojekt\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include"/>
 									<listOptionValue builtIn="false" value="${ORIGINAL_PROJECT_ROOT}/../C libraries"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\Mads\Documents\GitHub\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Peter\Desktop\EMP\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.1206148501" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.OPT_FOR_DEBUG" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG.2103062262" name="Generate debug information (-g)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG" value="true" valueType="boolean"/>
@@ -120,6 +121,8 @@
 									<listOptionValue builtIn="false" value="C:\Users\chris\Documents\4sem_code_git\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include"/>
 									<listOptionValue builtIn="false" value="${ORIGINAL_PROJECT_ROOT}/../C libraries"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\Mads\Documents\GitHub\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Peter\Desktop\EMP\FreeRTOSv10.2.0&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Peter\Desktop\EMP\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release.1904559311" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.OPT_FOR_SPACE" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS.994140354" name="Override built-in specs with the contents of the specified file (-specs)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS" value="&quot;nosys.specs&quot;" valueType="string"/>
@@ -154,5 +157,13 @@
 		<project id="FreeRTOSdemoTIVA.com.ti.ccstudio.buildDefinitions.TMS470.ProjectType.479745700" name="TMS470" projectType="com.ti.ccstudio.buildDefinitions.TMS470.ProjectType"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/Portfolio_2"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/Portfolio_2"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration"/>
 </cproject>
