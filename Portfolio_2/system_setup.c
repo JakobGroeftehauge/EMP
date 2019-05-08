@@ -30,7 +30,6 @@ SemaphoreHandle_t FLOW_ON_SEM;
 SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 SemaphoreHandle_t RTC_SEM;
-SemaphoreHandle_t UART_RECEIVE_SEM;
 SemaphoreHandle_t QUEUE_SEM;
 
 TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
@@ -41,7 +40,6 @@ TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 TaskHandle_t KEYBOARD_TASK;
 TaskHandle_t UART_RX_HANDLE;
-TaskHandle_t UART_TX_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
@@ -59,7 +57,6 @@ void setup_semaphores()
     MOTOR_ON_SEM = xSemaphoreCreateCounting(1, 0);
     FLOW_ON_SEM = xSemaphoreCreateCounting(1, 0);
     ACTIVATE_PUMP_HANDLER_SEM = xSemaphoreCreateCounting(1,0);
-    UART_RECEIVE_SEM = xSemaphoreCreateCounting(1,0);
     QUEUE_SEM = xSemaphoreCreateCounting(1,0);
 
 

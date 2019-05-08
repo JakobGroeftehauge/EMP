@@ -77,7 +77,6 @@ extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 extern SemaphoreHandle_t RTC_SEM;
-extern SemaphoreHandle_t UART_RECEIVE_SEM;
 extern SemaphoreHandle_t QUEUE_SEM;
 
 /**************************   Task Handles    ******************************/
@@ -91,7 +90,6 @@ extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 extern TaskHandle_t KEYBOARD_TASK;
 extern TaskHandle_t UART_RX_HANDLE;
-extern TaskHandle_t UART_TX_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 

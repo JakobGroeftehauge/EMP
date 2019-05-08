@@ -19,7 +19,7 @@ extern void UARTRX (void *);
 *   Output   : -
 *   Function : -
 ******************************************************************************/
-extern void UARTTX (void *);
+extern void UARTTX (char in);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -

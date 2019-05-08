@@ -52,16 +52,13 @@ void UARTRX (void * pvParameters)
     }
 }
 
-void UARTTX (void * pvParameters)
+void UARTTX (char in)
 {
-   char c;
-   for(;;)
-   {
+   char c = in;
        if(uart0_tx_rdy())
        {
            uart0_putc(xQueueReceive(UART_TX_QUEUE_HANDLE,&c,(TickType_t) 10));
        }
-   }
 }
 
 
