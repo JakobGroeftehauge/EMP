@@ -35,6 +35,7 @@ TaskHandle_t ENCODER_TASK_HANDLE;
 TaskHandle_t PUMP_TASK_HANDLE;
 TaskHandle_t BUTTON_DRIVER_HANDLE;
 TaskHandle_t PRICE_CALCULATOR_TASK;
+TaskHandle_t KEYBOARD_TASK;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_RX_QUEUE_HANDLE;
@@ -64,6 +65,7 @@ void setup_queues()
 *   Function : Test function
 ******************************************************************************/
 {
+    KEYBOARD_QUEUE_HANDLE = xQueueCreate(10, sizeof(float));
 
 }
 
