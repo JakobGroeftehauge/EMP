@@ -41,6 +41,8 @@ void encoder_task(void* pvParameters)
 
         ulTaskNotifyTake(pdFALSE, portMAX_DELAY);
 
+        //Maybe remove the semaphore
+
         xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
         Amount_Pumped++;
         xSemaphoreGive(AMOUNT_PUMPED_SEM);
