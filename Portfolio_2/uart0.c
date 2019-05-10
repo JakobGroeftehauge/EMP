@@ -21,6 +21,7 @@
 // Standard includes
 #include <stdint.h>
 #include <stdbool.h>
+#include "FreeRTOS.h"
 
 // Hardware includes
 #include "tm4c123gh6pm.h"

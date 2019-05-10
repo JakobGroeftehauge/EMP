@@ -6,14 +6,18 @@
 #include "uart0.h"
 #include "system_setup.h"
 #include "queue.h"
+#include "FreeRTOS.h"
 
 /*****************************    Defines    *******************************/
+
+
 
 /********************** External declaration of Variables ******************/
 
 volatile UBaseType_t elementsInQueue            = 0;
 volatile uint8_t     *receive_character         = 0;
-
+char dsend = 'a';
+char csend;
 
 
 /****************************    Semaphores    ***************************/
@@ -34,6 +38,8 @@ void UARTRX (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
+    //TickType_t xLastWakeTime;
+    //const TickType_t xFrequency = 50;
 
 
     for (;;)
@@ -47,19 +53,23 @@ void UARTRX (void * pvParameters)
         }
 
         elementsInQueue = uxQueueMessagesWaiting( UART_RX_QUEUE_HANDLE );
-        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 50 ) );
-        //vTaskDelay(pdMS_TO_TICKS( 50 ));
+        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 100 ) );
+        //vTaskDelay(10);
     }
 }
 
 void UARTTX (void * pvParameters)
 {
-   char c='a';
+
+   xQueueSend(UART_TX_QUEUE_HANDLE, &dsend, portMAX_DELAY);
+
    for(;;)
    {
        if(uart0_tx_rdy())
        {
-           uart0_putc(xQueueReceive(UART_TX_QUEUE_HANDLE,&c,(TickType_t) 10));
+           xQueueReceive(UART_TX_QUEUE_HANDLE,&csend, portMAX_DELAY);
+           uart0_putc(csend);//
+
        }
    }
 }
