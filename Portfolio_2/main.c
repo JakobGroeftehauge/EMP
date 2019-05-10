@@ -28,7 +28,8 @@
 #include "Button_driver.h"
 #include "price_calculator.h"
 #include "RTC.h"
-#include "Drehimpulsgeber.h"
+//#include "Drehimpulsgeber.h"
+#include "digisw.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -64,7 +65,7 @@ int main(void)
     //xTaskCreate(button_driver_task, "Button driver task", 10, 0, 1, &BUTTON_DRIVER_HANDLE);
     //xTaskCreate(price_calulator_task, "Price Calculator Task", 10, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
     //xTaskCreate(RTC_task, "RTC task", 10, 0, 1, &RTC_CLOCK_TASK_HANDLE);
-    xTaskCreate(Drehimpulsgeber_task, "Drehimpulsgeber task", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
+    xTaskCreate(digiSwitch_task, "Drehimpulsgeber task", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
 
     // Start the scheduler.
     // --------------------

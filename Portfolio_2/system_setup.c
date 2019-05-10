@@ -40,7 +40,7 @@ TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 TaskHandle_t DREHIMPULS_TASK_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
-QueueHandle_t UART_RX_QUEUE_HANDLE;
+QueueHandle_t UART_TX_QUEUE_HANDLE;
 QueueHandle_t KEYBOARD_QUEUE_HANDLE;
 /*****************************   Functions   *******************************/
 
