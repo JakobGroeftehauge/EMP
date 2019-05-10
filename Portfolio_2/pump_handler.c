@@ -39,7 +39,6 @@
 #define SHUNT_ACTIVATION_PERIOD   5000   //when schedueled every 1 ms
 //#define TICK_PER_LITER            1125
 #define DELAY_TIME                1 //ms
-
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -89,8 +88,6 @@ void pump_handler_task(void)
         case PUMP_ON_STATE:
 
             Motor_ON = TRUE;
-            Flow_ON = FALSE;
-            Shunt_ON = FALSE;
 
             time_since_handle_activation++;
 
@@ -121,30 +118,27 @@ void pump_handler_task(void)
 
             if(time_since_shunt_activated >= SHUNT_ACTIVATION_PERIOD)
             {
-                if(Amount_Pumped <= (Amount_to_pump - TICK_PER_LITER))
-                {
-                state = PUMPING_SHUNT_OFF_STATE;
-                }
-                time_since_shunt_activated = 0;
+                state = PUMPING_SHUNT_ON_STATE; //PUMPING_SHUNT_OFF_STATE;
             }
 
-            break;
 
+
+            break;
         case PUMPING_SHUNT_OFF_STATE:
 
             Shunt_ON = FALSE;
-
+            //How do we discovery that we are nearing the paid amount?
             if(Handle_Activated == FALSE)
             {
             state = PUMP_ON_STATE;
             time_since_handle_activation = 0;
             }
 
-            if(Amount_Pumped >= (Amount_to_pump - TICK_PER_LITER))
-            {
-                state = PUMPING_SHUNT_ON_STATE;
-                time_since_shunt_activated = 0;
-            }
+//            if() Detect we are nearing the paid amount of fuel
+//            {
+//            state = PUMPING_SHUNT_ON_STATE;
+//            time_since_shunt_activated = 0;
+//            }
 
             break;
         case FINISH_PUMPING_STATE:

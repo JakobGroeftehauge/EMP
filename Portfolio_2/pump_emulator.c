@@ -22,13 +22,9 @@
 #include "pump_emulator.h"
 #include "system_setup.h"
 #include "FreeRTOS.h"
-#include "tm4c123gh6pm.h"
 
 /*****************************    Defines    *******************************/
 #define TIME_BETWEEN_PULSES 4 //4ms - maybe needs to be corrected to accomodate specifications.
-#define ON  1
-#define OFF 0
-
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -50,22 +46,14 @@ void pump_emulator_task(void *pvParameters)
     for(;;)
     {
 
-    if (Motor_ON > 0)
-    {
-        power_state = ON;
-    }
-    else
-    {
-        power_state = OFF;
-    }
-
+    power_state = (Motor_ON > 0);
     xLastWakeTime = xTaskGetTickCount();
 
 
     switch(power_state)
     {
     case 1:
-        GPIO_PORTF_DATA_R |= 0x08;
+        //RED LED ON
         if(Flow_ON > 0)
         {
 
@@ -84,7 +72,7 @@ void pump_emulator_task(void *pvParameters)
         break;
 
     default:
-        GPIO_PORTF_DATA_R &= 0xF7;
+        //RED LED OFF
         delta_time = TIME_BETWEEN_PULSES;
         break;
     }
