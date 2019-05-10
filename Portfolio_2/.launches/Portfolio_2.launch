@@ -4,6 +4,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.C:\Users\Jakob\Google Drive\01 SDU\04 4. Semester\03 Embedded programmering\EMP\Portfolio_2\targetConfigs\Tiva TM4C123GH6PM.ccxml.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="${build_artifact:Portfolio_2}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.C:\Users\Jakob\Google Drive\01 SDU\04 4. Semester\03 Embedded programmering\EMP\Portfolio_2\targetConfigs\Tiva TM4C123GH6PM.ccxml.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="Portfolio_2"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:Portfolio_2}"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.C:\Users\Jakob\Google Drive\01 SDU\04 4. Semester\03 Embedded programmering\EMP\Portfolio_2\targetConfigs\Tiva TM4C123GH6PM.ccxml.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="C:/Users\Jakob\Google Drive\01 SDU\04 4. Semester\03 Embedded programmering\EMP\Portfolio_2\Debug\Portfolio_2.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Portfolio_2"/>
 </listAttribute>

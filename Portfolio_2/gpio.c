@@ -1,4 +1,4 @@
-/*
+ /*
  * gpio.c
  *
  *  Created on: 13. mar. 2019
@@ -27,7 +27,7 @@ void init_gpio(void)
   uint8_t dummy;
 
   // Enable the GPIO port that is used for the on-board LED.
-  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOF;
+  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOF |SYSCTL_RCGC2_GPIOA;
 
   // Do a dummy read to insert a few cycles after enabling the peripheral.
   dummy = SYSCTL_RCGC2_R;
@@ -53,6 +53,11 @@ void init_gpio(void)
   // Enable the GPIO pins for digital function (PD6).
   GPIO_PORTD_DEN_R = 0x40;
 
+
+  // SETUP PORT A as input:
+  GPIO_PORTA_DIR_R = 0x00;
+
+  GPIO_PORTA_PUR_R = 0x60;
 
 }
 

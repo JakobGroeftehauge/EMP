@@ -2,7 +2,7 @@
 * University of Southern Denmark
 * Embedded Programming (EMP)
 *
-* MODULENAME.: RTC.c
+* MODULENAME.: Drehimpulsegeber.c
 *
 * PROJECT....: Portfolio 2
 *
@@ -19,10 +19,13 @@
 
 /***************************** Include files *******************************/
 #include <stdint.h>
-#include "RTC.h"
+#include "tm4c123gh6pm.h"
+#include "Drehimpulsgeber.h"
 #include "system_setup.h"
+
 /*****************************    Defines    *******************************/
-#define ONE_SEK    1000
+
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -30,46 +33,74 @@
 
 /*****************************   Functions   *******************************/
 
-void RTC_task(void* pvParameters)
+void Drehimpulsgeber_task(void* pvParameters)
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
 *   Function : Test function
 ******************************************************************************/
 {
-    TickType_t xLastWakeTime;
+    uint8_t AB;
+    uint8_t AB_delayed;
+    uint8_t YY;
+    //uint8_t temp_100;
+    //uint8_t temp_50;
 
+
+    YY = 0x00;
     for(;;)
     {
 
-    xLastWakeTime = xTaskGetTickCount();
+    AB = (GPIO_PORTA_DATA_R >> 5) & 0x03;
 
-    xSemaphoreTake(RTC_SEM, portMAX_DELAY);
-
-    RTC_sek++;
-
-    if(RTC_sek >= 60)
+    //sample AB.
+    if(AB != AB_delayed)
     {
-    RTC_sek = 0;
-    RTC_min++;
+        YY = AB ^= AB_delayed;
 
-    if(RTC_min >= 60)
-    {
-    RTC_min = 0;
-    RTC_hour++;
+        if((AB >> 1) == (AB & 0x01))
+        {
+            switch(YY)
+            {
+            case 1:
+            bill_50_inserted++;
+            break;
+            // one
+            case 2:
+            bill_100_inserted++;
+            break;
 
-    if(RTC_hour >= 24)
-    {
-    RTC_hour = 0;
+            default:
+            break;
+
+            }
+        }
+        else
+        {
+            switch(YY)
+            {
+            case 2:
+            bill_50_inserted++;
+            break;
+
+            case 1:
+            bill_100_inserted++;
+            break;
+
+            default:
+            break;
+            }
+
+
+
+        }
+
     }
 
-    }
+    AB_delayed = AB;
+    vTaskDelay(pdMS_TO_TICKS(1));
     }
 
-    xSemaphoreGive(RTC_SEM);
-    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(ONE_SEK));
-    }
 }
-
 
 /****************************** End Of Module *******************************/

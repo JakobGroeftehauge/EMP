@@ -59,16 +59,10 @@ uint8_t RTC_hour;
 
 
 //Event buffers:
+uint8_t bill_50_inserted;
+uint8_t bill_100_inserted;
 
-uint16_t Money_Paid;
 
-
-//uint8_t MOTOR_ON;
-//uint8_t FLOW_ON;
-//uint8_t SHUNT_ON;
-//
-//uint32_t PUMP_ENCODER_TICKS;
-//uint32_t AMOUNT_FUEL_PAID;
 
 /**************************   Semaphore Handles    *************************/
 
@@ -86,6 +80,7 @@ extern TaskHandle_t PUMP_TASK_HANDLE;
 extern TaskHandle_t BUTTON_DRIVER_HANDLE;
 extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
+extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 
