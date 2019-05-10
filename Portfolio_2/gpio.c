@@ -27,7 +27,7 @@ void init_gpio(void)
   uint8_t dummy;
 
   // Enable the GPIO port that is used for the on-board LED.
-  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOF;
+  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOC | SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOF;
 
   // Do a dummy read to insert a few cycles after enabling the peripheral.
   dummy = SYSCTL_RCGC2_R;
@@ -49,9 +49,16 @@ void init_gpio(void)
   /*PORT D setup*/
   // Set the direction as output (PD6).
   GPIO_PORTD_DIR_R = 0x40;
+  GPIO_PORTD_DIR_R = 0x4C;
 
   // Enable the GPIO pins for digital function (PD6).
   GPIO_PORTD_DEN_R = 0x40;
+  GPIO_PORTD_DEN_R = 0x4C;
+
+  /* PORT C setup */
+  GPIO_PORTC_DIR_R = 0xF0;
+  GPIO_PORTC_DEN_R = 0xF0;
+
 
 
 }

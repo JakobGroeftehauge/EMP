@@ -24,13 +24,6 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>FPGA_comp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-ORIGINAL_PROJECT_ROOT/C%20libraries/FPGA_comp.c</locationURI>
-		</link>
-	</linkedResources>
 	<variableList>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
