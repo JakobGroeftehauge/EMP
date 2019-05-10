@@ -54,7 +54,7 @@ void UARTRX (void * pvParameters)
 
 void UARTTX (void * pvParameters)
 {
-   char c;
+   char c='a';
    for(;;)
    {
        if(uart0_tx_rdy())
