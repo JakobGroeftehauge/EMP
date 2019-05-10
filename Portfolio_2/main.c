@@ -67,9 +67,6 @@ int main(void)
 
     // Start the scheduler.
     // --------------------
-    move_LCD( 4, 0 );
-    wr_ch_LCD( (INT8U)('i') );
-    wr_ch_LCD( (INT8U)('j') );
 
     vTaskStartScheduler();
 
