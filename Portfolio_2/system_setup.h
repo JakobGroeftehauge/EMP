@@ -85,7 +85,7 @@ extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
 /**************************   Queue Handles    ******************************/
 
 extern QueueHandle_t UART_RX_QUEUE_HANDLE;
-extern QueueHandle_t UART_RX_QUEUE_HANDLE;
+extern QueueHandle_t UART_TX_QUEUE_HANDLE;
 extern QueueHandle_t KEYBOARD_QUEUE_HANDLE;
 
 /*****************************   Constants   *******************************/

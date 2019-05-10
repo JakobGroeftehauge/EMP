@@ -29,6 +29,8 @@
 #include "price_calculator.h"
 #include "lcd.h"
 #include "emp_type.h"
+#include "RTC.h"
+#include "digisw.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
