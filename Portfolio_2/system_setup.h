@@ -81,6 +81,7 @@ extern TaskHandle_t BUTTON_DRIVER_HANDLE;
 extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
+extern TaskHandle_t LCD_DRIVER_TASK;
 
 /**************************   Queue Handles    ******************************/
 
