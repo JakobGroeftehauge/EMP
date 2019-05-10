@@ -20,6 +20,7 @@
 /***************************** Include files *******************************/
 #include "system_setup.h"
 #include "FreeRTOS.h"
+#include <stdint.h>
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -43,6 +44,7 @@ TaskHandle_t LCD_DRIVER_TASK;
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
 QueueHandle_t KEYBOARD_QUEUE_HANDLE;
+QueueHandle_t DIGI_SW_QUEUE_HANDLE;
 /*****************************   Functions   *******************************/
 
 void setup_semaphores()
@@ -69,7 +71,7 @@ void setup_queues()
 *   Function : Test function
 ******************************************************************************/
 {
-
+    DIGI_SW_QUEUE_HANDLE = xQueueCreate(5, 1);
 }
 
 void init_system_parameter()
@@ -83,5 +85,6 @@ void init_system_parameter()
     Motor_ON = 0;
     Flow_ON = 0;
     Shunt_ON = 0;
+    bill_50_inserted = 0;
 }
 /****************************** End Of Module *******************************/

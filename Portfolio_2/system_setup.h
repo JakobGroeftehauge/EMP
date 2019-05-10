@@ -30,6 +30,9 @@
 #define Fuel_95   2
 #define Fuel_E10  3
 
+#define DSE_CCW     3
+#define DSE_CW      6
+
 #define TICK_PER_LITER            1125
 /********************** External declaration of Variables ******************/
 
@@ -88,6 +91,7 @@ extern TaskHandle_t LCD_DRIVER_TASK;
 extern QueueHandle_t UART_RX_QUEUE_HANDLE;
 extern QueueHandle_t UART_TX_QUEUE_HANDLE;
 extern QueueHandle_t KEYBOARD_QUEUE_HANDLE;
+extern QueueHandle_t DIGI_SW_QUEUE_HANDLE;
 
 /*****************************   Constants   *******************************/
 
