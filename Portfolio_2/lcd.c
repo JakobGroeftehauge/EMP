@@ -38,7 +38,7 @@ enum LCD_states
 };
 
 /*****************************   Constants   *******************************/
-const INT8U LCD_init_sequense[]= 
+const INT8U LCD_init_sequense[]=
 {
   0x30,		// Reset
   0x30,		// Reset
@@ -50,7 +50,7 @@ const INT8U LCD_init_sequense[]=
   0x01,		// Clear Display
   0x02,     // Home
   0xFF		// stop
-}; 
+};
 
 /*****************************   Variables   *******************************/
 INT8U display_buffer[COL_SIZE][ROW_SIZE];
@@ -70,7 +70,7 @@ INT8U LCD_timer = 3; 		// Wait for 30 mS after power up
 /*****************************   Functions   *******************************/
 INT8U wr_ch_LCD( INT8U ch )
 /*****************************************************************************
-*   OBSERVE  : LCD_PROC NEEDS 20 mS TO PRINT OUT ONE CHARACTER 
+*   OBSERVE  : LCD_PROC NEEDS 20 mS TO PRINT OUT ONE CHARACTER
 *   Function : See module specification (.h-file).
 *****************************************************************************/
 {
@@ -172,7 +172,7 @@ void out_LCD_low( INT8U Ch )
 /*****************************************************************************
 *   Input    : Mask
 *   Output   : -
-*   Function : Send low part of character to LCD. 
+*   Function : Send low part of character to LCD.
 *              This function works only in 4 bit data mode.
 ******************************************************************************/
 {
@@ -199,7 +199,7 @@ void out_LCD_high( INT8U Ch )
 /*****************************************************************************
 *   Input    : Mask
 *   Output   : -
-*   Function : Send high part of character to LCD. 
+*   Function : Send high part of character to LCD.
 *              This function works only in 4 bit data mode.
 ******************************************************************************/
 {
@@ -403,7 +403,3 @@ void vLCD_task( void *pvParameters )
 
 
 /****************************** End Of Module *******************************/
-
-
-
-
