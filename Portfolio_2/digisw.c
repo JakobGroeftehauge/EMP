@@ -26,33 +26,11 @@ bool temp2 = 0;
 
 /*****************************   Functions   *******************************/
 
-void digisw_init(void)
-/*****************************************************************************
-*   Input    :  -
-*   Output   :  -
-*   Function :
-*****************************************************************************/
-{
-  int8_t dummy;
-  // Enable the GPIO port A.
-  SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOA | SYSCTL_RCGC2_GPIOF;
-
-  // Do a dummy read to insert a few cycles after enabling the peripheral.
-  dummy = SYSCTL_RCGC2_R;
-
-  GPIO_PORTA_DEN_R |= 0xE0;
-
-  GPIO_PORTF_DIR_R |= 0x04;
-  GPIO_PORTF_DEN_R |= 0x04;
-
-}
 
 
 void digiSwitch_task(void *pvParameters)
 {
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-  digisw_init();
+
   for( ;; )
   {
 
@@ -60,46 +38,52 @@ void digiSwitch_task(void *pvParameters)
       if( digisw_state != DSS_A_ON ){
         if( GPIO_PORTA_DATA_R & 0x40 ){
           event = DSE_CCW;
-          bill_50_inserted++;
-          //xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
-          GPIO_PORTF_DATA_R ^= 0x04;
+          //bill_50_inserted++;
+          xQueueSend( DIGI_SW_QUEUE_HANDLE,  &event, portMAX_DELAY  );
+
         }
         else{
           event = DSE_CW;
-          bill_50_inserted++;
-          //xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
-          GPIO_PORTF_DATA_R ^= 0x02;
+          //bill_100_inserted++;
+          xQueueSend( DIGI_SW_QUEUE_HANDLE,  &event, portMAX_DELAY  );
+
         }
         digisw_state = DSS_A_ON;
-        GPIO_PORTF_DATA_R |= 0x04;
+
       }
       if(GPIO_PORTA_DATA_R & 0x80){
           event = DSE_PRESS;
-          //xQueueSend(digiSwitch_queue, &event, portMAX_DELAY);
-          GPIO_PORTF_DATA_R ^= 0x08;
+          //xQueueSend(DIGI_SW_QUEUE_HANDLE, &event, portMAX_DELAY);
+
       }
     }
-    else{
+    else
+    {
       if( digisw_state != DSS_A_OFF ){
         if( GPIO_PORTA_DATA_R & 0x40 ){
           event = DSE_CW;
-          //xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
+          //bill_100_inserted++;
+          xQueueSend( DIGI_SW_QUEUE_HANDLE,  &event, portMAX_DELAY  );
         }
-        else{
+        else
+        {
           event = DSE_CCW;
-          //xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
+          //bill_50_inserted++;
+          xQueueSend( DIGI_SW_QUEUE_HANDLE,  &event, portMAX_DELAY  );
         }
         digisw_state = DSS_A_OFF;
-        GPIO_PORTF_DATA_R &= 0xFB;
+
       }
-      if(GPIO_PORTA_DATA_R & 0x80){
+      if(GPIO_PORTA_DATA_R & 0x80)
+      {
           event = DSE_PRESS;
           //xQueueSend(digiSwitch_queue, &event,portMAX_DELAY);
-          GPIO_PORTF_DATA_R ^= 0x08;
+
       }
     }
-    GPIO_PORTF_DATA_R ^= 0x04;
-    vTaskDelayUntil (&xLastWakeTime, 5 );
+
+    vTaskDelay(pdMS_TO_TICKS(1));
+
   }
 }
 

@@ -53,7 +53,7 @@ int main(void)
 {
     init_gpio();
     init_system_parameter();
-
+    setup_queues();
     //Create semaphores
     setup_semaphores();
 
@@ -65,7 +65,9 @@ int main(void)
 //    xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
 //    xTaskCreate(button_driver_task, "Button driver task", 10, 0, 1, &BUTTON_DRIVER_HANDLE);
 //    xTaskCreate(price_calulator_task, "Price Calculator Task", 10, 0, 1, &PRICE_CALCULATOR_TASK);
-    xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
+//    xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
+    xTaskCreate(digiSwitch_task, "Drehimpulsgeber", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
+
 
     // Start the scheduler.
     // --------------------

@@ -61,7 +61,7 @@ void init_gpio(void)
 
   // SETUP PORT A as input:
   GPIO_PORTA_DIR_R = 0x00;
-
+  GPIO_PORTA_DEN_R |= 0xE0;
   GPIO_PORTA_PUR_R = 0x60;
 
 }
