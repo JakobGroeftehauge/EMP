@@ -31,6 +31,7 @@
 #include "emp_type.h"
 #include "RTC.h"
 #include "digisw.h"
+#include "key.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -57,6 +58,7 @@ int main(void)
     //Create semaphores
     setup_semaphores();
 
+    KEYBOARD_QUEUE_HANDLE = xQueueCreate( 10, sizeof( char ) );
 
     // Start the tasks.
 
@@ -66,6 +68,7 @@ int main(void)
 //    xTaskCreate(button_driver_task, "Button driver task", 10, 0, 1, &BUTTON_DRIVER_HANDLE);
 //    xTaskCreate(price_calulator_task, "Price Calculator Task", 10, 0, 1, &PRICE_CALCULATOR_TASK);
     xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
+    xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
 
     // Start the scheduler.
     // --------------------
