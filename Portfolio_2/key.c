@@ -62,6 +62,8 @@ extern void key_task(void* pvParameters)
   INT8U y;
   INT8U ch;
   INT8U x = 1;
+  INT8U LCD_pos = 0;
+
 
   for(;;)
   {
@@ -87,7 +89,9 @@ extern void key_task(void* pvParameters)
             // to be pressed
             xQueueSend(KEYBOARD_QUEUE_HANDLE,(void*)&ch,1);
             xQueueReceive(KEYBOARD_QUEUE_HANDLE, (void*) &ch ,10);
-            move_LCD( 4, 1 );
+            if(LCD_pos>15)
+                LCD_pos=0;
+            move_LCD( LCD_pos++, 1 );
             wr_ch_LCD( (INT8U) ch);
             //put_queue( Q_KEY, ch, 1 );
             //vTaskDelay(20);
