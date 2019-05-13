@@ -147,14 +147,18 @@ void vControl_task(void *pvParameters)
                 move_LCD(0,0);
                 wr_str_LCD("Insert Cash");
 
-                wr_ch_LCD(Cash_inserted/100 + '0');
+                move_LCD(12,0);
+                wr_ch_LCD(Cash_inserted%10000/1000 + '0');
+                wr_ch_LCD(Cash_inserted%1000/100 + '0');
+                wr_ch_LCD((Cash_inserted%100)/10 + '0');
+                wr_ch_LCD((Cash_inserted%10) + '0');
 
                 move_LCD(0,1);
                 wr_str_LCD("# to continue");
                 if(xQueueReceive(DIGI_SW_QUEUE_HANDLE,&Cash_q_receive,50))
                 {
                     if(Cash_q_receive == DSE_CCW)
-                        Cash_inserted += 250;
+                        Cash_inserted += 50;
                     else if(Cash_q_receive == DSE_CW)
                         Cash_inserted += 100;
                 }
