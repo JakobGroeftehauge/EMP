@@ -86,6 +86,5 @@ void init_system_parameter()
     Motor_ON = 0;
     Flow_ON = 0;
     Shunt_ON = 0;
-    bill_50_inserted = 0;
 }
 /****************************** End Of Module *******************************/

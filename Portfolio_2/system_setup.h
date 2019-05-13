@@ -22,6 +22,7 @@
 /***************************** Include files *******************************/
 #include "FreeRTOS.h"
 #include "semphr.h"
+#include "emp_type.h"
 /*****************************    Defines    *******************************/
 #define TRUE  1
 #define FALSE 0
@@ -35,6 +36,23 @@
 
 #define TICK_PER_LITER            1125
 /********************** External declaration of Variables ******************/
+
+//Structs
+struct log_data{
+    INT8U id[16];
+    float Price;
+    float litres_pumped;
+    INT8U Time_sec;
+    INT8U Time_min;
+    INT8U Time_hour;
+    INT8U Fuel_Type;
+};
+
+
+struct Accounts {
+    INT8U id[16];
+    INT8U password[16];
+};
 
 // State buffers:
 
@@ -58,21 +76,9 @@ uint8_t RTC_sek;
 uint8_t RTC_min;
 uint8_t RTC_hour;
 
+struct log_data po_log_data[128];
+uint8_t log_pointer;
 
-
-
-//Event buffers:
-uint8_t bill_50_inserted;
-uint8_t bill_100_inserted;
-
-
-//Structs
-//struct LOG{
-//    INT8U id[ACCOUNT_ID_LENGTH];
-//    float Price;
-//    INT8U Time
-//    INT8U Fuel_Type;
-//};
 
 /**************************   Semaphore Handles    *************************/
 

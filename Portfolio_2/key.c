@@ -71,7 +71,6 @@ extern void key_task(void* pvParameters)
       {
         case 0:
           GPIO_PORTA_DATA_R |= 0x04; //Set X3 high
-          GPIO_PORTF_DATA_R |= 0x0E; //Something to do with LEDS
           my_state = 1;
 
           break;
@@ -79,7 +78,6 @@ extern void key_task(void* pvParameters)
           y = GPIO_PORTE_DATA_R & 0x0F; //Read Y1-Y4
           if( y ) // if any of them is set, meaning a btn is pressed
           {
-            GPIO_PORTF_DATA_R &= 0xFD; // turns on red led
             // depending on the button pressed, y can be either
             // 0x01, 0x02, 0x04, 0x08.
             // returns the character located at the X-pos scanned

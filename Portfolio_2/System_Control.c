@@ -90,6 +90,8 @@ void vControl_task(void *pvParameters)
 {
     INT8U Control_State = Choose_fuel;
     INT8U key_Receive;
+    INT8U Cash_q_receive;
+    INT16U Cash_inserted = 0;
     INT8U Account_ID[ACCOUNT_ID_LENGTH+1];
     INT8U Password_text[ACCOUNT_ID_LENGTH+1];
     INT8U Current_Price_Arr[MAX_BALANCE_LENGTH+1];
@@ -143,16 +145,27 @@ void vControl_task(void *pvParameters)
             case Cash:
                 move_LCD(0,0);
                 wr_str_LCD("Insert Cash");
+
+                wr_ch_LCD(Cash_inserted/100 + '0');
+
                 move_LCD(0,1);
                 wr_str_LCD("# to continue");
-                    if(xQueueReceive(KEYBOARD_QUEUE_HANDLE,&key_Receive,50))
+                if(xQueueReceive(DIGI_SW_QUEUE_HANDLE,&Cash_q_receive,50))
+                {
+                    if(Cash_q_receive == DSE_CCW)
+                        Cash_inserted += 50;
+                    else if(Cash_q_receive == DSE_CW)
+                        Cash_inserted += 100;
+                }
+
+                if(xQueueReceive(KEYBOARD_QUEUE_HANDLE,&key_Receive,50))
+                {
+                    if(key_Receive == CONTINUE)
                     {
-                        if(key_Receive == CONTINUE)
-                        {
-                            Control_State = Fueling;
-                            clear_LCD();
-                        }
+                        Control_State = Fueling;
+                        clear_LCD();
                     }
+                }
                 break;
 
             case Account:
@@ -234,6 +247,7 @@ void vControl_task(void *pvParameters)
                 {
                     Control_State = Choose_fuel;
                     xSemaphoreGive(ACTIVATE_PUMP_HANDLER_SEM);
+
                     //Update Log
                 }
                 break;
