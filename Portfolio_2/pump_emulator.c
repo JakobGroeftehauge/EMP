@@ -89,8 +89,9 @@ void pump_emulator_task(void *pvParameters)
         break;
     }
 
-    //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time));
-        vTaskDelay(pdMS_TO_TICKS(5));
+    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time*2)); // Increases 2 tick every time the encoder is signaled
+    // Due too lack of CPU power
+        //vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
 /****************************** End Of Module *******************************/

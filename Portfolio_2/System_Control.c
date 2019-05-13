@@ -211,6 +211,7 @@ void vControl_task(void *pvParameters)
                     else //Add check for Password
                     {
                         Control_State = Fueling;
+                        Balance = MAX_BALANCE;
                         i=0;
                         clear_LCD();
                     }
@@ -230,7 +231,7 @@ void vControl_task(void *pvParameters)
                 move_LCD(7,1);
                 wr_str_LCD(Liter_Sum_Arr);
 
-                if(xSemaphoreTake(ACTIVATE_PUMP_HANDLER_SEM, portMAX_DELAY))
+                if(xSemaphoreTake(ACTIVATE_PUMP_HANDLER_SEM, 0))
                 {
                     Control_State = Choose_fuel;
                     xSemaphoreGive(ACTIVATE_PUMP_HANDLER_SEM);
