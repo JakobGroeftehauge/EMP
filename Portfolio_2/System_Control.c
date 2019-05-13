@@ -132,6 +132,7 @@ void vControl_task(void *pvParameters)
                     if(key_Receive == CASH)
                     {
                         Control_State = Cash;
+                        xQueueReset(DIGI_SW_QUEUE_HANDLE);
                         clear_LCD();
                     }
                     else if(key_Receive == ACCOUNT)
@@ -153,7 +154,7 @@ void vControl_task(void *pvParameters)
                 if(xQueueReceive(DIGI_SW_QUEUE_HANDLE,&Cash_q_receive,50))
                 {
                     if(Cash_q_receive == DSE_CCW)
-                        Cash_inserted += 50;
+                        Cash_inserted += 250;
                     else if(Cash_q_receive == DSE_CW)
                         Cash_inserted += 100;
                 }

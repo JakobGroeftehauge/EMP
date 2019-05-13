@@ -67,6 +67,7 @@ void init_gpio(void)
   GPIO_PORTA_PUR_R = 0x60;
   GPIO_PORTA_DIR_R |= 0x1C;
   GPIO_PORTA_DEN_R |= 0x1C;
+  GPIO_PORTA_DEN_R |= 0xE0;
 
 }
 
