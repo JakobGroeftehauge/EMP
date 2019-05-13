@@ -62,42 +62,57 @@ extern void key_task(void* pvParameters)
   INT8U y;
   INT8U ch;
   INT8U x = 1;
+  INT8U LCD_pos = 0;
+
 
   for(;;)
   {
       switch( my_state )
       {
         case 0:
-          GPIO_PORTA_DATA_R |= 0x04;
-          GPIO_PORTF_DATA_R |= 0x0E;
+          GPIO_PORTA_DATA_R |= 0x04; //Set X3 high
+          GPIO_PORTF_DATA_R |= 0x0E; //Something to do with LEDS
           my_state = 1;
 
           break;
         case 1:
-          y = GPIO_PORTE_DATA_R & 0x0F;
-          if( y )
+          y = GPIO_PORTE_DATA_R & 0x0F; //Read Y1-Y4
+          if( y ) // if any of them is set, meaning a btn is pressed
           {
-            GPIO_PORTF_DATA_R &= 0xFD;
+            GPIO_PORTF_DATA_R &= 0xFD; // turns on red led
+            // depending on the button pressed, y can be either
+            // 0x01, 0x02, 0x04, 0x08.
+            // returns the character located at the X-pos scanned
+            // and Y-pos caught
             ch = key_catch( x, row(y) );
+            // after key is sent to queue, wait for no key
+            // to be pressed
             xQueueSend(KEYBOARD_QUEUE_HANDLE,(void*)&ch,1);
+            xQueueReceive(KEYBOARD_QUEUE_HANDLE, (void*) &ch ,10);
+            if(LCD_pos>15)
+                LCD_pos=0;
+            move_LCD( LCD_pos++, 1 );
+            wr_ch_LCD( (INT8U) ch);
             //put_queue( Q_KEY, ch, 1 );
+            //vTaskDelay(20);
             my_state = 2;
           }
-          else
+          else //  move on to next column (X)
           {
             x++;
             if( x > 3 )
               x = 1;
-            GPIO_PORTA_DATA_R &= 0xE3;
+            GPIO_PORTA_DATA_R &= 0xE3; //clear X1-X3
             GPIO_PORTA_DATA_R |= ( 0x01 << (x+1 ));
-            y = GPIO_PORTA_DATA_R;
+            y = GPIO_PORTA_DATA_R; // dont think this does anything
           }
           break;
         case 2:
-          if( !(GPIO_PORTE_DATA_R & 0x0F ))
+          if( !(GPIO_PORTE_DATA_R & 0x0F )) // if no key is pressed
           {
-            x=1;
-            GPIO_PORTA_DATA_R |= 0x04;
+            x=1; //reset x
+            GPIO_PORTA_DATA_R |= 0x04; // set X3
+            vTaskDelay(2);
             my_state = 1;
           }
           break;

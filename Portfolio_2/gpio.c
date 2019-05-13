@@ -27,7 +27,7 @@ void init_gpio(void)
   uint8_t dummy;
 
   // Enable the GPIO port that is used for the on-board LED.
-  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOC | SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOF |SYSCTL_RCGC2_GPIOA;
+  SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOC | SYSCTL_RCGC2_GPIOD | SYSCTL_RCGC2_GPIOE | SYSCTL_RCGC2_GPIOF |SYSCTL_RCGC2_GPIOA;
 
   // Do a dummy read to insert a few cycles after enabling the peripheral.
   dummy = SYSCTL_RCGC2_R;
@@ -59,13 +59,15 @@ void init_gpio(void)
   GPIO_PORTC_DIR_R = 0xF0;
   GPIO_PORTC_DEN_R = 0xF0;
 
+  /*PORT E setup */
+  GPIO_PORTE_DEN_R = 0x0F;
+
   // SETUP PORT A as input:
   GPIO_PORTA_DIR_R = 0x00;
-  GPIO_PORTA_DEN_R |= 0xE0;
   GPIO_PORTA_PUR_R = 0x60;
+  GPIO_PORTA_DIR_R |= 0x1C;
+  GPIO_PORTA_DEN_R |= 0x1C;
 
 }
 
 /****************************** End Of Module *******************************/
-
-
