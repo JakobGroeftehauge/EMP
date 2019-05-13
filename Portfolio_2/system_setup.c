@@ -23,6 +23,7 @@
 #include <stdint.h>
 /*****************************    Defines    *******************************/
 
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -40,6 +41,7 @@ TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 TaskHandle_t DREHIMPULS_TASK_HANDLE;
 TaskHandle_t LCD_DRIVER_TASK;
+TaskHandle_t SYSTEM_ADM_TASK_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
@@ -86,5 +88,6 @@ void init_system_parameter()
     Flow_ON = 0;
     Shunt_ON = 0;
     bill_50_inserted = 0;
+    log_index = 0;
 }
 /****************************** End Of Module *******************************/

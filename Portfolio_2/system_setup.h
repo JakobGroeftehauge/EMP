@@ -34,6 +34,16 @@
 #define DSE_CW      6
 
 #define TICK_PER_LITER            1125
+
+#define MAX_LOG_SIZE              100
+
+typedef struct
+{
+    uint8_t id;
+    uint8_t amount_pumped;
+    uint8_t fuel_type;
+    float amount_paid;
+} log_element;
 /********************** External declaration of Variables ******************/
 
 // State buffers:
@@ -59,12 +69,13 @@ uint8_t RTC_min;
 uint8_t RTC_hour;
 
 
-
-
 //Event buffers:
 uint8_t bill_50_inserted;
 uint8_t bill_100_inserted;
 
+// LOG
+uint8_t log_index;
+//struct  log_element log[MAX_LOG_SIZE];
 
 
 /**************************   Semaphore Handles    *************************/
@@ -85,6 +96,7 @@ extern TaskHandle_t PRICE_CALCULATOR_TASK_HANDLE;
 extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
 extern TaskHandle_t LCD_DRIVER_TASK;
+extern TaskHandle_t SYSTEM_ADM_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 
