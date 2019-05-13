@@ -71,6 +71,7 @@ extern void key_task(void* pvParameters)
       {
         case 0:
           GPIO_PORTA_DATA_R |= 0x04; //Set X3 high
+
           my_state = 1;
 
           break;

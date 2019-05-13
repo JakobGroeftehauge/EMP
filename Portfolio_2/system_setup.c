@@ -86,5 +86,9 @@ void init_system_parameter()
     Motor_ON = 0;
     Flow_ON = 0;
     Shunt_ON = 0;
+    Fuel_Price_92 = 2;
+    Fuel_Price_95 = 2;
+    Fuel_Price_E10 = 2;
+    Amount_to_pump = 10000;
 }
 /****************************** End Of Module *******************************/

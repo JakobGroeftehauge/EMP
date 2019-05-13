@@ -27,9 +27,9 @@
 #define TRUE  1
 #define FALSE 0
 
-#define Fuel_92   1
-#define Fuel_95   2
-#define Fuel_E10  3
+#define Fuel_92   '1'
+#define Fuel_95   '2'
+#define Fuel_E10  '3'
 
 #define DSE_CCW     3
 #define DSE_CW      6
@@ -70,7 +70,7 @@ float Fuel_Price_E10;
 float Amount_Pumped;
 uint16_t Amount_to_pump;
 uint16_t Balance;
-float Current_Price;
+volatile float Current_Price;
 
 uint8_t RTC_sek;
 uint8_t RTC_min;

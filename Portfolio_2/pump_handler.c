@@ -35,10 +35,10 @@
 #define TRUE                      1
 #define FALSE                     0
 
-#define MAX_DEACTIVATION_TIME     15000  //when schedueled every 1ms
-#define SHUNT_ACTIVATION_PERIOD   5000   //when schedueled every 1 ms
+#define MAX_DEACTIVATION_TIME     15000/5  //when schedueled every 1ms
+#define SHUNT_ACTIVATION_PERIOD   1000   //when schedueled every 1 ms
 //#define TICK_PER_LITER            1125
-#define DELAY_TIME                1 //ms
+#define DELAY_TIME                5 //ms
 
 /*****************************   Constants   *******************************/
 
@@ -73,18 +73,26 @@ void pump_handler_task(void)
         case PUMP_OFF_STATE:
 
             Motor_ON = FALSE; //make sure the physical pump is deactivated
-            xSemaphoreTake(ACTIVATE_PUMP_HANDLER_SEM, portMAX_DELAY);
-            state = PUMP_READY;
 
-        case PUMP_READY:
-
-            if(Hook_Activated == TRUE)
+            if(Hook_Activated == 1 && Balance > 0)
             {
-                state = PUMP_ON_STATE;
-                time_since_handle_activation = 0;
+            state = PUMP_ON_STATE;
+            time_since_handle_activation = 0;
             }
-
             break;
+
+//        case PUMP_READY:
+//
+//            if(Hook_Activated == TRUE)
+//            {
+//                state = PUMP_ON_STATE;
+//                time_since_handle_activation = 0;
+//            }
+//            else
+//            {
+//                state = PUMP_OFF_STATE;
+//            }
+//            break;
 
         case PUMP_ON_STATE:
 
@@ -157,6 +165,7 @@ void pump_handler_task(void)
             break;
     }
 
+    //vTaskDelay(pdMS_TO_TICKS(5));
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(DELAY_TIME));
     }
 }

@@ -45,7 +45,6 @@ void init_gpio(void)
   // Enable internal pull-up (PF0 and PF4).
   GPIO_PORTF_PUR_R = 0x11;
 
-
   /*PORT D setup*/
   // Set the direction as output (PD6).
   GPIO_PORTD_DIR_R = 0x40;
