@@ -32,6 +32,7 @@
 #include "RTC.h"
 #include "digisw.h"
 #include "key.h"
+#include "System_Control.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -71,7 +72,7 @@ int main(void)
     xTaskCreate(digiSwitch_task, "Drehimpulsgeber", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
     xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
     xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
-
+    xTaskCreate(vControl_task,"Controller task",100, 0, 1, &CONTROLLER_TASK_HANDLE);
     // Start the scheduler.
     // --------------------
 

@@ -305,9 +305,9 @@ void vLCD_task( void *pvParameters )
                     col_pointer = 0;
                     row_pointer = 0;
 
-                    move_LCD( 4, 0 );
-                    wr_ch_LCD( (INT8U)('i') );
-                    wr_ch_LCD( (INT8U)('j') );
+//                    move_LCD( 4, 0 );
+//                    wr_ch_LCD( (INT8U)('i') );
+//                    wr_ch_LCD( (INT8U)('j') );
                   }
                   vTaskDelay(20);
                   break;

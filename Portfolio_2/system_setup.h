@@ -45,14 +45,14 @@ uint8_t Motor_ON;
 uint8_t Shunt_ON;
 
 uint8_t Fuel_Type;
-uint8_t Fuel_Price_92;
-uint8_t Fuel_Price_95;
-uint8_t Fuel_Price_E10;
+float Fuel_Price_92;
+float Fuel_Price_95;
+float Fuel_Price_E10;
 
-uint16_t Amount_Pumped;
+float Amount_Pumped;
 uint16_t Amount_to_pump;
 uint16_t Balance;
-uint16_t Current_Price;
+float Current_Price;
 
 uint8_t RTC_sek;
 uint8_t RTC_min;
@@ -66,6 +66,13 @@ uint8_t bill_50_inserted;
 uint8_t bill_100_inserted;
 
 
+//Structs
+//struct LOG{
+//    INT8U id[ACCOUNT_ID_LENGTH];
+//    float Price;
+//    INT8U Time
+//    INT8U Fuel_Type;
+//};
 
 /**************************   Semaphore Handles    *************************/
 
@@ -86,6 +93,7 @@ extern TaskHandle_t RTC_CLOCK_TASK_HANDLE;
 extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
 extern TaskHandle_t LCD_DRIVER_TASK;
 extern TaskHandle_t KEYBOARD_TASK_HANDLE;
+extern TaskHandle_t CONTROLLER_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 

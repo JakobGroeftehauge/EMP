@@ -88,13 +88,6 @@ extern void key_task(void* pvParameters)
             // after key is sent to queue, wait for no key
             // to be pressed
             xQueueSend(KEYBOARD_QUEUE_HANDLE,(void*)&ch,1);
-            xQueueReceive(KEYBOARD_QUEUE_HANDLE, (void*) &ch ,10);
-            if(LCD_pos>15)
-                LCD_pos=0;
-            move_LCD( LCD_pos++, 1 );
-            wr_ch_LCD( (INT8U) ch);
-            //put_queue( Q_KEY, ch, 1 );
-            //vTaskDelay(20);
             my_state = 2;
           }
           else //  move on to next column (X)
