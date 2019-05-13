@@ -89,8 +89,8 @@ void pump_emulator_task(void *pvParameters)
         break;
     }
 
-    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time));
-
+    //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time));
+        vTaskDelay(pdMS_TO_TICKS(5));
     }
 }
 /****************************** End Of Module *******************************/

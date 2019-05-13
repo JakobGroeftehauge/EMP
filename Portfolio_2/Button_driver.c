@@ -39,7 +39,7 @@ uint8_t sw1_pressed()
 
 uint8_t sw2_pressed()
 {
-    return( !(GPIO_PORTF_DATA_R & 0x01) );
+    return( !(GPIO_PORTF_DATA_R & 0x02) );
 }
 
 void button_driver_task(void* pvParameters)
@@ -50,6 +50,7 @@ void button_driver_task(void* pvParameters)
 ******************************************************************************/
 {
     uint8_t sw2_state = OFF;
+    uint8_t flag = 0;
 
     for(;;)
     {
@@ -68,20 +69,38 @@ void button_driver_task(void* pvParameters)
 
     case OFF:
 
-        Hook_Activated = FALSE;
+
 
         if(sw2_pressed())
         {
-            sw2_state = ON;
+            Hook_Activated = TRUE;
+            flag = 1;
+            if(!sw2_pressed())
+            {
+                //sw2_state = ON;
+                flag = 0;
+            }
         }
+        else
+            Hook_Activated = FALSE;
+
+        break;
     case ON:
 
-        Hook_Activated = TRUE;
-
-        if(sw2_pressed())
-        {
-            sw2_state = OFF;
-        }
+//        Hook_Activated = TRUE;
+//
+//        if(sw2_pressed() || flag == 1)
+//        {
+//            flag = 1;
+//            if(!sw2_pressed())
+//            {
+//                sw2_state = OFF;
+//                flag = 0;
+//            }
+//        }
+        break;
+    default:
+        break;
     }
 
     vTaskDelay(pdMS_TO_TICKS(5));
