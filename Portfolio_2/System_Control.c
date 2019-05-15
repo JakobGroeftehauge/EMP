@@ -345,6 +345,8 @@ void vControl_task(void *pvParameters)
                                &RTC_min,
                                &RTC_hour,
                                &Fuel_Type);
+
+
                     clear_sys_ctrl_buffers();
 
                 }
