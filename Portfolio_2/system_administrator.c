@@ -179,22 +179,28 @@ void write_fuel_price(INT8U log_no)
 void write_amount_paid(INT8U log_no)
 {
     INT8U c;
-    c = po_log_data[log_no].amount_paid/1000 + '0';
+    c = po_log_data[log_no].amount_paid/10 + '0';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
-    c = (po_log_data[log_no].amount_paid%1000)/100 + '0';
+    c = (INT16U)po_log_data[log_no].amount_paid%10 + '0';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
-    c = (po_log_data[log_no].amount_paid%100)/10 + '0';
+    c = '.';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
-    c = (po_log_data[log_no].amount_paid%10) + '0';
+    c = ((INT16U)(po_log_data[log_no].amount_paid*100)%100)/10 + '0';
+    xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
+
+    c = (INT16U)(po_log_data[log_no].amount_paid*100)%10 + '0';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
     c = 'k';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
     c = 'r';
+    xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
+
+    c = ' ';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
     c = 0x0A;
@@ -236,9 +242,8 @@ void system_administrator_task(void)
 {
     uint8_t temp_message;
     uint8_t state = IDLE;
-    uint32_t tempPrice;
+    float tempPrice;
     uint8_t  tempFuelType;
-    float temp_float_price;
 
     for(;;)
     {
@@ -269,39 +274,35 @@ void system_administrator_task(void)
             break;
 
         case WAIT_FOR_FIRST_BYTE:
-            tempPrice = temp_message;
+            tempPrice = (temp_message - '0')*10;
             state = WAIT_FOR_SECOND_BYTE;
             break;
 
         case WAIT_FOR_SECOND_BYTE:
-            tempPrice = (tempPrice << 8) | temp_message;
+            tempPrice = tempPrice + (temp_message - '0');
             state = WAIT_FOR_THIRD_BYTE;
             break;
 
         case WAIT_FOR_THIRD_BYTE:
-            tempPrice = (tempPrice << 8) | temp_message;
+            tempPrice = tempPrice + (float)(temp_message - '0')*0.1;
             state = WAIT_FOR_FOURTH_BYTE;
             break;
 
         case WAIT_FOR_FOURTH_BYTE:
-//            tempPrice = (tempPrice << 8) | temp_message;
-//
-//            // convert to float
-//            temp_float_price = ((float*)&tempPrice);
-//
-//            if(tempFuelType == Fuel_92)
-//            {
-//
-//            }
-//            else if(tempFuelType == Fuel_92)
-//            {
-//
-//            }
-//            else if(tempFuelType == Fuel_E10)
-//            {
-//
-//            }
-            // store the specified place
+            tempPrice = tempPrice + (float)(temp_message - '0')*0.01;
+
+            if(tempFuelType == Fuel_92)
+            {
+                Fuel_Price_92 = tempPrice;
+            }
+            else if(tempFuelType == Fuel_95)
+            {
+                Fuel_Price_95 = tempPrice;
+            }
+            else if(tempFuelType == Fuel_E10)
+            {
+                Fuel_Price_E10 = tempPrice;
+            }
             state = IDLE;
             break;
 

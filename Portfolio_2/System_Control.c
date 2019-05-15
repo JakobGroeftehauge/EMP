@@ -46,7 +46,7 @@ enum Controller_States
 /*************************  Function interfaces ****************************/
 void add_to_log(INT8U log_no,
                 INT8U* id,
-                INT16U* amount_paid,
+                float* amount_paid,
                 float* Price,
                 float* litres_pumped,
                 INT8U* Time_sec,
@@ -75,6 +75,7 @@ void clear_sys_ctrl_buffers()
     Balance = 0;
     Fuel_Type = 0;
     Amount_Pumped = 0;
+
 
 }
 
@@ -127,7 +128,9 @@ void Float_to_String(INT8U *arr, float number)
 ******************************************************************************/
 void vControl_task(void *pvParameters)
 {
+    float price_pr_litre;
     float litres_pumped;
+    float amount_paid;
     INT8U Control_State = Choose_fuel;
     INT8U key_Receive;
     INT8U Cash_q_receive;
@@ -159,10 +162,15 @@ void vControl_task(void *pvParameters)
                    if(key_Receive == OCTANE_92 || key_Receive == OCTANE_95 || key_Receive == E10_BIO)
                    {
                        Fuel_Type = key_Receive;
+                       if(Fuel_Type == Fuel_92)
+                           price_pr_litre = Fuel_Price_92;
+                       else if(Fuel_Type == Fuel_95)
+                           price_pr_litre = Fuel_Price_95;
+                       else
+                           price_pr_litre = Fuel_Price_E10;
                        Control_State = Payment_Type;
                        clear_LCD();
                    }
-
                 }
                 break;
             case Payment_Type:
@@ -180,7 +188,7 @@ void vControl_task(void *pvParameters)
                         Account_ID[1] = 'A';
                         Account_ID[2] = '$';
                         Account_ID[3] = 'H';
-                        Account_ID[4] = '0';
+                        Account_ID[4] = 0 ;
                         clear_LCD();
                     }
                     else if(key_Receive == ACCOUNT)
@@ -219,6 +227,7 @@ void vControl_task(void *pvParameters)
                     {
                         Control_State = Fueling;
                         Balance = Cash_inserted;
+                        amount_paid = Cash_inserted;
                         xSemaphoreGive(INITIATE_PUMPING_SEM);
                         clear_LCD();
                     }
@@ -299,6 +308,7 @@ void vControl_task(void *pvParameters)
                         Balance = MAX_BALANCE;
                         i=0;
                         clear_LCD();
+                        amount_paid = 0;
                         xSemaphoreGive(INITIATE_PUMPING_SEM);
                     }
                 }
@@ -307,18 +317,22 @@ void vControl_task(void *pvParameters)
             case Fueling:
                 Float_to_String(Current_Price_Arr,Current_Price);
                 Float_to_String(Liter_Sum_Arr,((float)Amount_Pumped/TICK_PER_LITER));
-                if(Fuel_Type == Fuel_92)
-                {
-                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_92);
-                }
-                else if(Fuel_Type == Fuel_95)
-                {
-                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_95);
-                }
-                else
-                {
-                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_E10);
-                }
+
+                Float_to_String(Price_pr_Liter_Arr, price_pr_litre);
+
+
+//                if(Fuel_Type == Fuel_92)
+//                {
+//                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_92);
+//                }
+//                else if(Fuel_Type == Fuel_95)
+//                {
+//                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_95);
+//                }
+//                else
+//                {
+//                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_E10);
+//                }
 
                 move_LCD(0,0);
 
@@ -337,10 +351,14 @@ void vControl_task(void *pvParameters)
 
                     //Update Log
                     litres_pumped = (float)Amount_Pumped/TICK_PER_LITER;
+
+                    if(amount_paid == 0)
+                        amount_paid = price_pr_litre*litres_pumped;
+
                     add_to_log(log_pointer++,
                                Account_ID,
-                               &Cash_inserted,
-                               &Current_Price,
+                               &amount_paid,
+                               &price_pr_litre,
                                &litres_pumped,
                                &RTC_sek,
                                &RTC_min,
@@ -348,6 +366,7 @@ void vControl_task(void *pvParameters)
                                &Fuel_Type);
                     vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
                     vClear_Array(Password_text,PASSWORD_LENGTH+1);
+                    amount_paid = 0;
                     clear_sys_ctrl_buffers();
 
                 }
