@@ -131,10 +131,12 @@ void vControl_task(void *pvParameters)
     INT8U Account_ID[ACCOUNT_ID_LENGTH+1];
     INT8U Password_text[PASSWORD_LENGTH+1];
     INT8U Current_Price_Arr[MAX_BALANCE_LENGTH+1];
+    INT8U Price_pr_Liter_Arr[MAX_BALANCE_LENGTH+1];
     INT8U Liter_Sum_Arr[MAX_BALANCE_LENGTH+1];
     vClear_Array(Account_ID,PASSWORD_LENGTH+1);
     vClear_Array(Password_text,ACCOUNT_ID_LENGTH+1);
     vClear_Array(Current_Price_Arr,MAX_BALANCE_LENGTH+1);
+    vClear_Array(Price_pr_Liter_Arr,MAX_BALANCE_LENGTH+1);
     vClear_Array(Liter_Sum_Arr,MAX_BALANCE_LENGTH+1);
     INT8U i = 0;
     for(;;)
@@ -296,9 +298,23 @@ void vControl_task(void *pvParameters)
             case Fueling:
                 Float_to_String(Current_Price_Arr,Current_Price);
                 Float_to_String(Liter_Sum_Arr,((float)Amount_Pumped/TICK_PER_LITER));
+                if(Fuel_Type == Fuel_92)
+                {
+                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_92);
+                }
+                else if(Fuel_Type == Fuel_95)
+                {
+                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_95);
+                }
+                else
+                {
+                    Float_to_String(Price_pr_Liter_Arr,Fuel_Price_E10);
+                }
 
                 move_LCD(0,0);
-                wr_str_LCD("Price: ");
+                wr_str_LCD("Kr/l:");
+                move_LCD(5,0);
+                wr_str_LCD(Price_pr_Liter_Arr);
                 move_LCD(7,0);
                 wr_str_LCD(Current_Price_Arr);
                 move_LCD(0,1);
