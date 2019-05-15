@@ -19,6 +19,7 @@
 /* Hardware includes. */
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
+#include "uart0.h"
 
 /* Application includes */
 #include "system_setup.h"
@@ -33,6 +34,7 @@
 #include "digisw.h"
 #include "key.h"
 #include "System_Control.h"
+#include "uart_protocol.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -55,24 +57,27 @@ int main(void)
 {
     init_gpio();
     init_system_parameter();
-
+    uart0_init(9600,8,'o',1);
     setup_queues();
     //Create semaphores
     setup_semaphores();
 
     KEYBOARD_QUEUE_HANDLE = xQueueCreate( 10, sizeof( char ) );
 
+
     // Start the tasks.
 
-    xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
-    xTaskCreate(button_driver_task, "Button driver task", 100, 0, 1, &BUTTON_DRIVER_HANDLE);
-    xTaskCreate(price_calulator_task, "Price Calculator Task", 100, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
-    xTaskCreate(pump_emulator_task, "Pump emulator", 100, 0, 1, &PUMP_EMULATOR_TASK_HANDLE);
-    xTaskCreate(encoder_task, "Encoder Task", 100, 0, 1, &ENCODER_TASK_HANDLE);
-    xTaskCreate(digiSwitch_task, "Drehimpulsgeber", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
-    xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
-    xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
-    xTaskCreate(vControl_task,"Controller task",100, 0, 1, &CONTROLLER_TASK_HANDLE);
+//    xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
+//    xTaskCreate(button_driver_task, "Button driver task", 100, 0, 1, &BUTTON_DRIVER_HANDLE);
+//    xTaskCreate(price_calulator_task, "Price Calculator Task", 100, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
+//    xTaskCreate(pump_emulator_task, "Pump emulator", 100, 0, 1, &PUMP_EMULATOR_TASK_HANDLE);
+//    xTaskCreate(encoder_task, "Encoder Task", 100, 0, 1, &ENCODER_TASK_HANDLE);
+//    xTaskCreate(digiSwitch_task, "Drehimpulsgeber", 100, 0, 1, &DREHIMPULS_TASK_HANDLE);
+//    xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
+//    xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
+//    xTaskCreate(vControl_task,"Controller task",100, 0, 1, &CONTROLLER_TASK_HANDLE);
+      xTaskCreate(UARTTX,"UART TX", 100, 0, 1, &UARTTX_TASK_HANDLE);
+      xTaskCreate(UARTRX,"UART RX", 100, 0, 1, &UARTRX_TASK_HANDLE);
     // Start the scheduler.
     // --------------------
 

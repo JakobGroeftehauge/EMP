@@ -19,7 +19,7 @@ extern void UARTRX (void *);
 *   Output   : -
 *   Function : -
 ******************************************************************************/
-extern void UARTTX (char in);
+extern void UARTTX(void *pvParameters);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
