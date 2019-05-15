@@ -40,7 +40,7 @@
 //Structs
 struct log_data{
     INT8U id[16];
-    INT16U amount_paid;
+    float amount_paid;
     float Price;
     float litres_pumped;
     INT8U Time_sec;

@@ -22,7 +22,7 @@
 
 void add_to_log(INT8U log_no,
                 INT8U* id,
-                INT16U* amount_paid,
+                float* amount_paid,
                 float* Price,
                 float* litres_pumped,
                 INT8U* Time_sec,
