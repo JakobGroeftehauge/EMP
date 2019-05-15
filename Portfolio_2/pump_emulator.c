@@ -85,6 +85,11 @@ void pump_emulator_task(void *pvParameters)
         }
         break;
 
+    case OFF:
+        GPIO_PORTF_DATA_R &= 0xF7;
+        delta_time = TIME_BETWEEN_PULSES;
+        break;
+
     default:
         GPIO_PORTF_DATA_R &= 0xF7;
         delta_time = TIME_BETWEEN_PULSES;

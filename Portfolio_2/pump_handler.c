@@ -112,10 +112,11 @@ void pump_handler_task(void)
 
             }
 
-            if(time_since_handle_activation >= MAX_DEACTIVATION_TIME)
+            if(time_since_handle_activation >= MAX_DEACTIVATION_TIME || Hook_Activated == FALSE)
             {
             state = FINISH_PUMPING_STATE;
             }
+
 
             break;
 
