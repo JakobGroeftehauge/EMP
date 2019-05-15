@@ -43,7 +43,6 @@ void encoder_task(void* pvParameters)
 
         xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
         Amount_Pumped = Amount_Pumped + 2;
-
         xSemaphoreGive(AMOUNT_PUMPED_SEM);
 
     }
