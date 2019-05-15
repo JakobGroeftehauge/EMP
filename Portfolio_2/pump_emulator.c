@@ -25,7 +25,7 @@
 #include "tm4c123gh6pm.h"
 
 /*****************************    Defines    *******************************/
-#define TIME_BETWEEN_PULSES 4 //4ms - maybe needs to be corrected to accomodate specifications.
+#define TIME_BETWEEN_PULSES 9 //4ms - maybe needs to be corrected to accomodate specifications.
 #define ON  1
 #define OFF 0
 
@@ -50,6 +50,8 @@ void pump_emulator_task(void *pvParameters)
     for(;;)
     {
 
+    xLastWakeTime = xTaskGetTickCount();
+
     if (Motor_ON > 0)
     {
         power_state = ON;
@@ -59,7 +61,7 @@ void pump_emulator_task(void *pvParameters)
         power_state = OFF;
     }
 
-    xLastWakeTime = xTaskGetTickCount();
+
 
 
     switch(power_state)
@@ -71,7 +73,7 @@ void pump_emulator_task(void *pvParameters)
 
             if(Shunt_ON > 0)
             {
-                delta_time = 5 * TIME_BETWEEN_PULSES;
+                delta_time = 10 * TIME_BETWEEN_PULSES;
             }
             else
             {
@@ -89,7 +91,7 @@ void pump_emulator_task(void *pvParameters)
         break;
     }
 
-    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time*2)); // Increases 2 tick every time the encoder is signaled
+    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(delta_time)); // Increases 2 tick every time the encoder is signaled
     // Due too lack of CPU power
         //vTaskDelay(pdMS_TO_TICKS(1));
     }
