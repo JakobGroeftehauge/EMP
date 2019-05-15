@@ -75,6 +75,7 @@ void clear_sys_ctrl_buffers()
     Balance = 0;
     Fuel_Type = 0;
     Amount_Pumped = 0;
+
 }
 
 void vClear_Array(INT8U *arr, INT8U size)
@@ -346,6 +347,8 @@ void vControl_task(void *pvParameters)
                                &RTC_min,
                                &RTC_hour,
                                &Fuel_Type);
+                    vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
+                    vClear_Array(Password_text,PASSWORD_LENGTH+1);
                     clear_sys_ctrl_buffers();
 
                 }
