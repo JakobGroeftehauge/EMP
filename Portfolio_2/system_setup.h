@@ -67,7 +67,7 @@ float Fuel_Price_92;
 float Fuel_Price_95;
 float Fuel_Price_E10;
 
-float Amount_Pumped;
+uint16_t Amount_Pumped;
 uint16_t Amount_to_pump;
 uint16_t Balance;
 volatile float Current_Price;
@@ -87,7 +87,7 @@ extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 extern SemaphoreHandle_t RTC_SEM;
-
+extern SemaphoreHandle_t FINISH_PUMPING_SEM;
 /**************************   Task Handles    ******************************/
 
 extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;

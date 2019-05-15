@@ -55,9 +55,8 @@ void pump_handler_task(void)
 {
     uint8_t state = PUMP_OFF_STATE;
     uint16_t time_since_handle_activation = 0;
-    uint16_t time_since_shunt_activated = 0;
     TickType_t xLastWakeTime;
-
+    uint16_t amount_pumped_shunt_activated =  0;
 
 
     //Check order of state assignment (priorities)
@@ -74,7 +73,7 @@ void pump_handler_task(void)
 
             Motor_ON = FALSE; //make sure the physical pump is deactivated
 
-            if(Hook_Activated == 1 && Balance > 0)
+            if(Hook_Activated == 1 && Amount_to_pump > 0)
             {
             state = PUMP_ON_STATE;
             time_since_handle_activation = 0;
@@ -105,6 +104,12 @@ void pump_handler_task(void)
             if(Handle_Activated == TRUE)
             {
             state = PUMPING_SHUNT_ON_STATE;
+
+            xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
+            amount_pumped_shunt_activated = Amount_Pumped;
+            xSemaphoreGive(AMOUNT_PUMPED_SEM);
+            time_since_handle_activation = 0;
+
             }
 
             if(time_since_handle_activation >= MAX_DEACTIVATION_TIME)
@@ -119,21 +124,19 @@ void pump_handler_task(void)
             Flow_ON = TRUE;
             Shunt_ON = TRUE;
 
-            time_since_shunt_activated++;
-
             if(Handle_Activated == FALSE)
             {
             state = PUMP_ON_STATE;
             time_since_handle_activation = 0;
             }
 
-            if(time_since_shunt_activated >= SHUNT_ACTIVATION_PERIOD)
+            if(amount_pumped_shunt_activated + 0.1 * TICK_PER_LITER >= Amount_Pumped)
             {
-                if(Amount_Pumped <= (Amount_to_pump - TICK_PER_LITER))
+                if(Amount_Pumped <= (Amount_to_pump - TICK_PER_LITER*0.1))
                 {
                 state = PUMPING_SHUNT_OFF_STATE;
                 }
-                time_since_shunt_activated = 0;
+
             }
 
             break;
@@ -148,17 +151,20 @@ void pump_handler_task(void)
             time_since_handle_activation = 0;
             }
 
-            if(Amount_Pumped >= (Amount_to_pump - TICK_PER_LITER))
+            if(Amount_Pumped >= (Amount_to_pump - TICK_PER_LITER*0.1))
             {
                 state = PUMPING_SHUNT_ON_STATE;
-                time_since_shunt_activated = 0;
+                xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
+                amount_pumped_shunt_activated = Amount_Pumped;
+                xSemaphoreGive(AMOUNT_PUMPED_SEM);
+
             }
 
             break;
         case FINISH_PUMPING_STATE:
             Motor_ON = FALSE;
             Flow_ON = FALSE;
-            //Signal to the the UI task that the refueling has ended.
+            xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
             break;
         default:
             state = PUMP_OFF_STATE;
