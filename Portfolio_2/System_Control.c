@@ -253,10 +253,10 @@ void vControl_task(void *pvParameters)
                 move_LCD(7,1);
                 wr_str_LCD(Liter_Sum_Arr);
 
-                if(xSemaphoreTake(ACTIVATE_PUMP_HANDLER_SEM, 0))
+                if(xSemaphoreTake(FINISH_PUMPING_SEM, 0))
                 {
                     Control_State = Choose_fuel;
-                    xSemaphoreGive(ACTIVATE_PUMP_HANDLER_SEM);
+                    xSemaphoreGive(FINISH_PUMPING_SEM);
 
                     //Update Log
                 }
