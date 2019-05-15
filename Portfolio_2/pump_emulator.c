@@ -66,7 +66,7 @@ void pump_emulator_task(void *pvParameters)
 
     switch(power_state)
     {
-    case 1:
+    case ON:
         GPIO_PORTF_DATA_R |= 0x08;
         if(Flow_ON > 0)
         {

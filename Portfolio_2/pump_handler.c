@@ -21,12 +21,13 @@
 #include "pump_handler.h"
 #include "system_setup.h"
 /*****************************    Defines    *******************************/
-#define PUMP_OFF_STATE            0 //DONE
-#define PUMP_READY                1
-#define PUMP_ON_STATE             2 //DONE
-#define PUMPING_SHUNT_ON_STATE    3
-#define PUMPING_SHUNT_OFF_STATE   4
-#define FINISH_PUMPING_STATE      5
+#define IDLE                      0
+#define PUMP_OFF_STATE            1 //DONE
+#define PUMP_READY                2
+#define PUMP_ON_STATE             3 //DONE
+#define PUMPING_SHUNT_ON_STATE    4
+#define PUMPING_SHUNT_OFF_STATE   5
+#define FINISH_PUMPING_STATE      6
 
 
 
@@ -69,15 +70,21 @@ void pump_handler_task(void)
 
     switch(state)
     {
+        case IDLE:
+
+            if(xSemaphoreTake(INITIATE_PUMPING_SEM, portMAX_DELAY))
+            {
+                state = PUMP_OFF_STATE;
+            }
+        break;
         case PUMP_OFF_STATE:
 
             Motor_ON = FALSE; //make sure the physical pump is deactivated
-
-            if(Hook_Activated == 1 && Amount_to_pump > 0)
-            {
-            state = PUMP_ON_STATE;
-            time_since_handle_activation = 0;
-            }
+            if(Hook_Activated == 1)// && Amount_to_pump > 0)
+                {
+                state = PUMP_ON_STATE;
+                time_since_handle_activation = 0;
+                }
             break;
 
 //        case PUMP_READY:
@@ -103,18 +110,23 @@ void pump_handler_task(void)
 
             if(Handle_Activated == TRUE)
             {
-            state = PUMPING_SHUNT_ON_STATE;
+                state = PUMPING_SHUNT_ON_STATE;
 
-            xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
-            amount_pumped_shunt_activated = Amount_Pumped;
-            xSemaphoreGive(AMOUNT_PUMPED_SEM);
-            time_since_handle_activation = 0;
+                xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
+                amount_pumped_shunt_activated = Amount_Pumped;
+                xSemaphoreGive(AMOUNT_PUMPED_SEM);
+                time_since_handle_activation = 0;
 
             }
 
             if(time_since_handle_activation >= MAX_DEACTIVATION_TIME || Hook_Activated == FALSE)
             {
-            state = FINISH_PUMPING_STATE;
+                state = FINISH_PUMPING_STATE;
+                Motor_ON = FALSE;
+                Flow_ON = FALSE;
+                xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+                state = PUMP_OFF_STATE;
+                //xSemaphoreGive(FINISH_PUMPING_SEM);//testing
             }
 
 
@@ -129,15 +141,15 @@ void pump_handler_task(void)
 
             if(Handle_Activated == FALSE)
             {
-            state = PUMP_ON_STATE;
-            time_since_handle_activation = 0;
+                state = PUMP_ON_STATE;
+                time_since_handle_activation = 0;
             }
 
             if((amount_pumped_shunt_activated + 0.1 * TICK_PER_LITER) <= Amount_Pumped)
             {
                 if(Amount_Pumped <= (Amount_to_pump - TICK_PER_LITER*0.1))
                 {
-                state = PUMPING_SHUNT_OFF_STATE;
+                    state = PUMPING_SHUNT_OFF_STATE;
                 }
 
             }
@@ -145,7 +157,11 @@ void pump_handler_task(void)
             if(Amount_Pumped >= Amount_to_pump)
             {
                 state = FINISH_PUMPING_STATE;
+                Motor_ON = FALSE;
+                Flow_ON = FALSE;
                 xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+                state = PUMP_OFF_STATE;
+                //xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
             }
 
             break;
@@ -168,7 +184,11 @@ void pump_handler_task(void)
                 amount_pumped_shunt_activated = Amount_Pumped;
                 xSemaphoreGive(AMOUNT_PUMPED_SEM);
                 state = FINISH_PUMPING_STATE;
+                Motor_ON = FALSE;
+                Flow_ON = FALSE;
                 xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+                state = PUMP_OFF_STATE;
+                //xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
 
             }
 
@@ -176,9 +196,9 @@ void pump_handler_task(void)
         case FINISH_PUMPING_STATE:
             Motor_ON = FALSE;
             Flow_ON = FALSE;
-            //xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+            xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
             state = PUMP_OFF_STATE;
-            Amount_to_pump = 0;
+
             break;
         default:
             state = PUMP_OFF_STATE;

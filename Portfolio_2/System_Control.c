@@ -186,6 +186,7 @@ void vControl_task(void *pvParameters)
                     {
                         Control_State = Fueling;
                         Balance = Cash_inserted;
+                        xSemaphoreGive(INITIATE_PUMPING_SEM);
                         clear_LCD();
                     }
                 }
@@ -250,6 +251,7 @@ void vControl_task(void *pvParameters)
                         Balance = MAX_BALANCE;
                         i=0;
                         clear_LCD();
+                        xSemaphoreGive(INITIATE_PUMPING_SEM);
                     }
                 }
 
