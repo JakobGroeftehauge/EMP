@@ -80,6 +80,7 @@ int main(void)
     xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
     xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
     xTaskCreate(vControl_task,"Controller task",100, 0, 1, &CONTROLLER_TASK_HANDLE);
+    xTaskCreate(RTC_task, "RTC taks", 100, 0, 1, &RTC_CLOCK_TASK_HANDLE);
 
     // Start the scheduler.
     // --------------------
