@@ -31,6 +31,7 @@ SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 SemaphoreHandle_t RTC_SEM;
 SemaphoreHandle_t FINISH_PUMPING_SEM;
 SemaphoreHandle_t INITIATE_PUMPING_SEM;
+SemaphoreHandle_t OPERATING_TIME_SEM;
 
 TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 TaskHandle_t ENCODER_TASK_HANDLE;
@@ -68,6 +69,7 @@ void setup_semaphores()
     //MUTEXS
     AMOUNT_PUMPED_SEM = xSemaphoreCreateCounting(1, 1);
     RTC_SEM = xSemaphoreCreateCounting(1, 1);
+    OPERATING_TIME_SEM = xSemaphoreCreateCounting(1, 1);
 
 }
 
@@ -97,5 +99,6 @@ void init_system_parameter()
     Fuel_Price_92 = 2;
     Fuel_Price_95 = 2;
     Fuel_Price_E10 = 2;
+    Operating_time = 0;
 }
 /****************************** End Of Module *******************************/

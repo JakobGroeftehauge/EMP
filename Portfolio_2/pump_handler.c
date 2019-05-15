@@ -182,9 +182,18 @@ void pump_handler_task(void)
             break;
     }
 
+    if(Motor_ON == TRUE)
+    {
+    if(xSemaphoreTake(OPERATING_TIME_SEM, 0) == pdTRUE)
+    {
+    Operating_time++;
+    xSemaphoreGive(OPERATING_TIME_SEM);
+    }
+    }
 
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(DELAY_TIME));
     }
+
 }
 
 

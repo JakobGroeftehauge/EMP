@@ -79,6 +79,7 @@ uint8_t RTC_hour;
 
 struct log_data po_log_data[128];
 uint8_t log_pointer;
+uint32_t Operating_time;
 
 
 /**************************   Semaphore Handles    *************************/
@@ -90,6 +91,7 @@ extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 extern SemaphoreHandle_t RTC_SEM;
 extern SemaphoreHandle_t FINISH_PUMPING_SEM;
 extern SemaphoreHandle_t INITIATE_PUMPING_SEM;
+extern SemaphoreHandle_t OPERATING_TIME_SEM;
 /**************************   Task Handles    ******************************/
 
 extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
