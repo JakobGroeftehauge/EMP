@@ -257,7 +257,8 @@ void vControl_task(void *pvParameters)
                 if(xSemaphoreTake(FINISH_PUMPING_SEM, 0))
                 {
                     Control_State = Choose_fuel;
-                    xSemaphoreGive(FINISH_PUMPING_SEM);
+                    Cash_inserted = 0;
+
 
                     //Update Log
                 }

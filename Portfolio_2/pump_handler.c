@@ -35,7 +35,7 @@
 #define TRUE                      1
 #define FALSE                     0
 
-#define MAX_DEACTIVATION_TIME     1000 //15000/5  //when schedueled every 1ms
+#define MAX_DEACTIVATION_TIME     2000  //when schedueled every 1ms
 #define SHUNT_ACTIVATION_PERIOD   1000   //when schedueled every 1 ms
 //#define TICK_PER_LITER            1125
 #define DELAY_TIME                5 //ms
@@ -124,7 +124,7 @@ void pump_handler_task(void)
             Flow_ON = TRUE;
             Shunt_ON = TRUE;
 
-            time_since_handle_activation++; //test
+
 
             if(Handle_Activated == FALSE)
             {
@@ -147,7 +147,6 @@ void pump_handler_task(void)
 
             Shunt_ON = FALSE;
 
-            time_since_handle_activation++; //test
 
             if(Handle_Activated == FALSE)
             {
