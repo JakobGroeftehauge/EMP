@@ -53,7 +53,22 @@ void add_to_log(INT8U log_no,
                 INT8U* Fuel_Type
                 )
 {
-    //po_log_data[log_no].id;
+    for (i=0; i<ACCOUNT_ID_LENGTH;i++)
+    {
+        po_log_data[log_no].id[i] = id[i];
+    }
+    po_log_data[log_no].Price = *Price;
+    po_log_data[log_no].litres_pumped = *litres_pumped;
+    po_log_data[log_no].Time_sec = *Time_sec;
+    po_log_data[log_no].Time_min = *Time_min;
+    po_log_data[log_no].Time_hour = *Time_hour;
+    po_log_data[log_no].Fuel_Type = *Fuel_Type;
+}
+
+void clear_sys_ctrl_buffers()
+{
+    Balance = 0;
+    Fuel_Type = 0;
 }
 
 void vClear_Array(INT8U *arr, INT8U size)
@@ -274,8 +289,16 @@ void vControl_task(void *pvParameters)
                     Control_State = Choose_fuel;
                     Cash_inserted = 0;
 
-
-                    //po_log_data.//Update Log
+                    //Update Log
+                    add_to_log(log_pointer++,
+                               Account_ID,
+                               &Current_Price,
+                               &Amount_Pumped,
+                               &RTC_sek,
+                               &RTC_min,
+                               &RTC_hour,
+                               &Fuel_Type);
+                    clear_sys_ctrl_buffers();
                 }
                 break;
             default:
@@ -286,6 +309,3 @@ void vControl_task(void *pvParameters)
     }
 
 }
-
-
-
