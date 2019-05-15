@@ -53,7 +53,7 @@ void add_to_log(INT8U log_no,
                 INT8U* Fuel_Type
                 )
 {
-    for (i=0; i<ACCOUNT_ID_LENGTH;i++)
+    for (INT8U i=0; i<ACCOUNT_ID_LENGTH;i++)
     {
         po_log_data[log_no].id[i] = id[i];
     }
@@ -69,6 +69,7 @@ void clear_sys_ctrl_buffers()
 {
     Balance = 0;
     Fuel_Type = 0;
+    Amount_Pumped = 0;
 }
 
 void vClear_Array(INT8U *arr, INT8U size)
@@ -139,6 +140,7 @@ void vControl_task(void *pvParameters)
         {
             case Choose_fuel:
 
+                xSemaphoreTake(INITIATE_PUMPING_SEM, 0);
                 move_LCD(0,0);
                 wr_str_LCD("Choose Fuel Type");
                 move_LCD(0,1);
@@ -299,6 +301,7 @@ void vControl_task(void *pvParameters)
                                &RTC_hour,
                                &Fuel_Type);
                     clear_sys_ctrl_buffers();
+
                 }
                 break;
             default:

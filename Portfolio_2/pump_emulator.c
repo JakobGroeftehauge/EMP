@@ -67,17 +67,20 @@ void pump_emulator_task(void *pvParameters)
     switch(power_state)
     {
     case ON:
-        GPIO_PORTF_DATA_R |= 0x08;
+        GPIO_PORTF_DATA_R &= ~0x02;
         if(Flow_ON > 0)
         {
 
             if(Shunt_ON > 0)
             {
                 delta_time = 10 * TIME_BETWEEN_PULSES;
+                GPIO_PORTF_DATA_R &= ~0x04; //Yellow LED
             }
             else
             {
                 delta_time = TIME_BETWEEN_PULSES;
+
+                GPIO_PORTF_DATA_R |= 0x04; //Yellow LED
             }
 
             xTaskNotifyGive(ENCODER_TASK_HANDLE);
@@ -86,12 +89,14 @@ void pump_emulator_task(void *pvParameters)
         break;
 
     case OFF:
-        GPIO_PORTF_DATA_R &= 0xF7;
+        GPIO_PORTF_DATA_R |= 0x02;
+        GPIO_PORTF_DATA_R |= 0x04; //Yellow LED
         delta_time = TIME_BETWEEN_PULSES;
         break;
 
     default:
-        GPIO_PORTF_DATA_R &= 0xF7;
+        GPIO_PORTF_DATA_R |= 0x02;
+        GPIO_PORTF_DATA_R |= 0x04; //Yellow LED
         delta_time = TIME_BETWEEN_PULSES;
         break;
     }

@@ -76,7 +76,7 @@ void price_calulator_task(void* pvParameters)
     case ON:
 
 
-    Current_Price = (Amount_Pumped/TICK_PER_LITER) * temp_fuel_price;
+    Current_Price = ((float)Amount_Pumped/TICK_PER_LITER) * temp_fuel_price;
     Amount_to_pump = ((uint16_t) ((Balance/temp_fuel_price)*TICK_PER_LITER));
     if(Fuel_Type == 0)
     {

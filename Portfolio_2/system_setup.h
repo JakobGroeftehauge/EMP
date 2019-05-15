@@ -85,7 +85,7 @@ uint8_t log_pointer;
 extern SemaphoreHandle_t MOTOR_ON_SEM;
 extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
-//extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
+extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 extern SemaphoreHandle_t RTC_SEM;
 extern SemaphoreHandle_t FINISH_PUMPING_SEM;
 extern SemaphoreHandle_t INITIATE_PUMPING_SEM;
