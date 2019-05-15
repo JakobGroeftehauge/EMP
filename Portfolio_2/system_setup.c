@@ -20,6 +20,7 @@
 /***************************** Include files *******************************/
 #include "system_setup.h"
 #include "FreeRTOS.h"
+#include "System_Control.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -43,6 +44,7 @@ TaskHandle_t KEYBOARD_TASK_HANDLE;
 TaskHandle_t CONTROLLER_TASK_HANDLE;
 TaskHandle_t UARTTX_TASK_HANDLE;
 TaskHandle_t UARTRX_TASK_HANDLE;
+TaskHandle_t SYS_ADMIN_TASK_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
