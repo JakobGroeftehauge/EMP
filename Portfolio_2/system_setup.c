@@ -81,8 +81,8 @@ void setup_queues()
 ******************************************************************************/
 {
     DIGI_SW_QUEUE_HANDLE = xQueueCreate(5, 1);
-    UART_RX_QUEUE_HANDLE = xQueueCreate(10,1);
-    UART_TX_QUEUE_HANDLE = xQueueCreate(10,1);
+    UART_RX_QUEUE_HANDLE = xQueueCreate(100,1);
+    UART_TX_QUEUE_HANDLE = xQueueCreate(100,1);
 }
 
 void init_system_parameter()
@@ -99,6 +99,8 @@ void init_system_parameter()
     Fuel_Price_92 = 2;
     Fuel_Price_95 = 2;
     Fuel_Price_E10 = 2;
+
     Operating_time = 0;
+
 }
 /****************************** End Of Module *******************************/

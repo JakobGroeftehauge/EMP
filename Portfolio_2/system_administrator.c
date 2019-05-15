@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include "system_administrator.h"
 #include "system_setup.h"
+#include "System_Control.h"
 /*****************************    Defines    *******************************/
 // States
 #define IDLE                         0
@@ -29,6 +30,10 @@
 #define WAIT_FOR_SECOND_BYTE         3
 #define WAIT_FOR_THIRD_BYTE          4
 #define WAIT_FOR_FOURTH_BYTE         5
+
+#define MAX_DIGITS_PRICE             7
+#define MAX_DIGITS_LITER             4
+#define MAX_DIGITS_TOTAL            10
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -232,6 +237,214 @@ void print_log()
     }
 }
 
+void print_prices_liters(float B92, float L92, float B95, float L95, float BE10, float LE10, float total)
+{
+    INT8U i;
+    char s;
+    INT8U total_price_92_arr[MAX_DIGITS_PRICE];
+    INT8U total_liter_92_arr[MAX_DIGITS_LITER];
+    INT8U text_B92[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','F','u','e','l',' ', '9','2',':',' '};
+    INT8U text_L92[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','L','i','t','e','r',' ', '9','2',':',' '};
+
+    INT8U total_price_95_arr[MAX_DIGITS_PRICE];
+    INT8U total_liter_95_arr[MAX_DIGITS_LITER];
+    INT8U text_B95[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','F','u','e','l',' ', '9','5', ':',' '};
+    INT8U text_L95[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','L','i','t','e','r',' ', '9','5',':',' '};
+
+    INT8U total_price_E10_arr[MAX_DIGITS_PRICE];
+    INT8U total_liter_E10_arr[MAX_DIGITS_LITER];
+    INT8U text_BE10[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','F','u','e','l',' ', 'E','1','0', ':',' '};
+    INT8U text_LE10[]={'T','o','t','a','l',' ','p','r','i','c','e',' ','L','i','t','e','r',' ','E', '1','0',':',' '};
+
+    INT8U total_price_arr[MAX_DIGITS_TOTAL];
+    INT8U text_total[]={'T','o','t','a','l',' ','p','r','i','c','e', ':',' '};
+
+    Float_to_String(total_price_92_arr,B92);
+    Float_to_String(total_price_95_arr,B95);
+    Float_to_String(total_price_E10_arr,BE10);
+    Float_to_String(total_liter_92_arr,L92);
+    Float_to_String(total_liter_95_arr,L95);
+    Float_to_String(total_liter_E10_arr,LE10);
+    Float_to_String(total_price_arr,total);
+
+    for(i=0;i<21;i++)
+    {
+        s = text_B92[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    for(i=0;i<MAX_DIGITS_PRICE;i++)
+    {
+        s = total_price_92_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<21;i++)
+    {
+        s = text_B95[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    for(i=0;i<MAX_DIGITS_PRICE;i++)
+    {
+        s = total_price_95_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<22;i++)
+    {
+        s = text_BE10[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    for(i=0;i<MAX_DIGITS_PRICE;i++)
+    {
+        s = total_price_E10_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<13;i++)
+    {
+        s = text_total[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    for(i=0;i<MAX_DIGITS_TOTAL;i++)
+    {
+        s = total_price_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<22;i++)
+   {
+       s = text_L92[i];
+       xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+   }
+
+    for(i=0;i<MAX_DIGITS_LITER;i++)
+    {
+        s = total_liter_92_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<22;i++)
+   {
+       s = text_L95[i];
+       xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+   }
+
+    for(i=0;i<MAX_DIGITS_LITER;i++)
+    {
+        s = total_liter_95_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    for(i=0;i<23;i++)
+   {
+       s = text_LE10[i];
+       xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+   }
+
+    for(i=0;i<MAX_DIGITS_LITER;i++)
+    {
+        s = total_liter_E10_arr[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+}
+
+void print_accounts(INT8U num)
+{
+    INT8U i;
+    char s;
+    INT8U account_arr[128];
+    INT8U acc_text[]={'A','c','c','o','u','n','t','s',':',' '};
+
+
+    for(i=0;i<10;i++)
+    {
+        s = acc_text[i];
+        xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+    }
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    s = num/100+'0';
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    s = (num%100)/10 + '0';
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    s = num%10 + '0';
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+
+    s = 0x0A;
+    xQueueSend(UART_TX_QUEUE_HANDLE, &s, (TickType_t) 20);
+}
+
+void print_query()
+{
+    float Total_fuel_Price_92=0;
+    float Total_fuel_Price_95=0;
+    float Total_fuel_Price_E10=0;
+    float Total_fuel_Liter_92=0;
+    float Total_fuel_Liter_95=0;
+    float Total_fuel_Liter_E10=0;
+    float Sum_Of_All=0;
+    INT8U Account_purchases=0;
+    INT8U i;
+    for(i=0;i<log_pointer;i++)
+    {
+        if(po_log_data[i].Fuel_Type == Fuel_92)
+        {
+            Total_fuel_Price_92 += po_log_data[i].amount_paid;
+            Total_fuel_Liter_92 += po_log_data[i].litres_pumped;
+        }
+        if(po_log_data[i].Fuel_Type == Fuel_95)
+        {
+            Total_fuel_Price_95 += po_log_data[i].amount_paid;
+            Total_fuel_Liter_95 += po_log_data[i].litres_pumped;
+        }
+        else
+        {
+            Total_fuel_Price_E10 += po_log_data[i].amount_paid;
+            Total_fuel_Liter_E10 += po_log_data[i].litres_pumped;
+        }
+
+        Sum_Of_All += po_log_data[i].amount_paid;
+        if(po_log_data[i].id[0]<10)
+        {
+            Account_purchases++;
+        }
+    }
+    print_prices_liters(Total_fuel_Price_92, Total_fuel_Liter_92, Total_fuel_Price_95, Total_fuel_Liter_95, Total_fuel_Price_E10, Total_fuel_Liter_E10, Sum_Of_All);
+    print_accounts(Account_purchases);
+
+
+}
+
 
 void system_administrator_task(void)
 /*****************************************************************************
@@ -259,6 +472,10 @@ void system_administrator_task(void)
             else if(temp_message == '1')
             {
                 state = WAIT_FOR_FUEL_TYPE;
+            }
+            else if(temp_message == '2')
+            {
+                print_query();
             }
             break;
 

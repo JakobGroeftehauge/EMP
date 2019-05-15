@@ -33,5 +33,6 @@ void add_to_log(INT8U log_no,
 
 void vControl_task(void *pvParameters);
 void vClear_Array(INT8U *arr, INT8U size);
+void Float_to_String(INT8U *arr, float number);
 
 #endif /* SYSTEM_CONTROL_H_ */

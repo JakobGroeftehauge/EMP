@@ -364,9 +364,11 @@ void vControl_task(void *pvParameters)
                                &RTC_min,
                                &RTC_hour,
                                &Fuel_Type);
+
                     vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
                     vClear_Array(Password_text,PASSWORD_LENGTH+1);
                     amount_paid = 0;
+
                     clear_sys_ctrl_buffers();
 
                 }
