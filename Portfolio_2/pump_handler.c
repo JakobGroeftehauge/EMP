@@ -92,7 +92,6 @@ void pump_handler_task(void)
                 time_since_handle_activation = 0;
             }
             break;
-
         case PUMP_ON_STATE:
 
             Motor_ON = TRUE;
@@ -168,23 +167,22 @@ void pump_handler_task(void)
             time_since_handle_activation = 0;
             }
 
-            if(Amount_Pumped >= (Amount_to_pump - TICK_PER_LITER*0.1))
-            {
-                state = PUMPING_SHUNT_ON_STATE;
-                xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
-                amount_pumped_shunt_activated = Amount_Pumped;
-                xSemaphoreGive(AMOUNT_PUMPED_SEM);
-
-
-            }
-
+			if (Amount_Pumped >= (Amount_to_pump - TICK_PER_LITER * 0.1))
+			{
+				state = PUMPING_SHUNT_ON_STATE;
+				xSemaphoreTake(AMOUNT_PUMPED_SEM, portMAX_DELAY);
+				amount_pumped_shunt_activated = Amount_Pumped;
+				xSemaphoreGive(AMOUNT_PUMPED_SEM);
+			}
             break;
+
+
         default:
             state = IDLE;
             break;
     }
 
-    //vTaskDelay(pdMS_TO_TICKS(5));
+
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(DELAY_TIME));
     }
 }
