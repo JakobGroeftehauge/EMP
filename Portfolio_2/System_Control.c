@@ -168,6 +168,7 @@ void vControl_task(void *pvParameters)
                     if(key_Receive == CONTINUE)
                     {
                         Control_State = Fueling;
+                        Balance = Cash_inserted;
                         clear_LCD();
                     }
                 }
