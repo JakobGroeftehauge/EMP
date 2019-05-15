@@ -25,8 +25,6 @@
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-SemaphoreHandle_t MOTOR_ON_SEM;
-SemaphoreHandle_t FLOW_ON_SEM;
 SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 //SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 SemaphoreHandle_t RTC_SEM;
@@ -60,9 +58,9 @@ void setup_semaphores()
 ******************************************************************************/
 {
     //SIGNALING SEMAPHORES
-    MOTOR_ON_SEM = xSemaphoreCreateCounting(1, 0);
-    FLOW_ON_SEM = xSemaphoreCreateCounting(1, 0);
-    //ACTIVATE_PUMP_HANDLER_SEM = xSemaphoreCreateCounting(1,0);
+
+    ACTIVATE_PUMP_HANDLER_SEM = xSemaphoreCreateCounting(1,0);
+
     FINISH_PUMPING_SEM = xSemaphoreCreateCounting(1,0);
     //MUTEXS
     AMOUNT_PUMPED_SEM = xSemaphoreCreateCounting(1, 1);
@@ -97,6 +95,5 @@ void init_system_parameter()
     Fuel_Price_92 = 2;
     Fuel_Price_95 = 2;
     Fuel_Price_E10 = 2;
-    Amount_to_pump = 10000;
 }
 /****************************** End Of Module *******************************/
