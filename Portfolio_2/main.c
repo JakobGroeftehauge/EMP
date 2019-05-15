@@ -69,8 +69,8 @@ int main(void)
     // Start the tasks.
 
 
-      xTaskCreate(UARTTX,"UART TX", 100, 0, 1, &UARTTX_TASK_HANDLE);
-      xTaskCreate(UARTRX,"UART RX", 100, 0, 1, &UARTRX_TASK_HANDLE);
+    xTaskCreate(UARTTX,"UART TX", 100, 0, 1, &UARTTX_TASK_HANDLE);
+    xTaskCreate(UARTRX,"UART RX", 100, 0, 1, &UARTRX_TASK_HANDLE);
     xTaskCreate(pump_handler_task, "Pump Handler Task",  100, 0, 1, &PUMP_TASK_HANDLE);
     xTaskCreate(button_driver_task, "Button driver task", 100, 0, 1, &BUTTON_DRIVER_HANDLE);
     xTaskCreate(price_calulator_task, "Price Calculator Task", 100, 0, 1, &PRICE_CALCULATOR_TASK_HANDLE);
