@@ -43,6 +43,34 @@ enum Controller_States
 
 
 /*************************  Function interfaces ****************************/
+void add_to_log(INT8U log_no,
+                INT8U* id,
+                float* Price,
+                INT16U* litres_pumped,
+                INT8U* Time_sec,
+                INT8U* Time_min,
+                INT8U* Time_hour,
+                INT8U* Fuel_Type
+                )
+{
+    for (i=0; i<ACCOUNT_ID_LENGTH;i++)
+    {
+        po_log_data[log_no].id[i] = id[i];
+    }
+    po_log_data[log_no].Price = *Price;
+    po_log_data[log_no].litres_pumped = *litres_pumped;
+    po_log_data[log_no].Time_sec = *Time_sec;
+    po_log_data[log_no].Time_min = *Time_min;
+    po_log_data[log_no].Time_hour = *Time_hour;
+    po_log_data[log_no].Fuel_Type = *Fuel_Type;
+}
+
+void clear_sys_ctrl_buffers()
+{
+    Balance = 0;
+    Fuel_Type = 0;
+}
+
 void vClear_Array(INT8U *arr, INT8U size)
 {
     INT8U i;
@@ -62,10 +90,14 @@ void Float_to_String(INT8U *arr, float number)
     {
         if(i!=4)
         {
+            if(i==3)
+            {
+                trailing_zero_flag = 1;
+            }
             if(numb/divisor!=0)
             {
                 arr[i]=numb/divisor + '0';
-                trailing_zero_flag = 1;
+
             }
             else if(trailing_zero_flag == 0)
             {
@@ -168,6 +200,7 @@ void vControl_task(void *pvParameters)
                     if(key_Receive == CONTINUE)
                     {
                         Control_State = Fueling;
+                        Balance = Cash_inserted;
                         clear_LCD();
                     }
                 }
@@ -238,7 +271,7 @@ void vControl_task(void *pvParameters)
                 break;
             case Fueling:
                 Float_to_String(Current_Price_Arr,Current_Price);
-                Float_to_String(Liter_Sum_Arr,Amount_Pumped);
+                Float_to_String(Liter_Sum_Arr,((float)Amount_Pumped/TICK_PER_LITER));
 
                 move_LCD(0,0);
                 wr_str_LCD("Price: ");
@@ -249,12 +282,21 @@ void vControl_task(void *pvParameters)
                 move_LCD(7,1);
                 wr_str_LCD(Liter_Sum_Arr);
 
-                if(xSemaphoreTake(ACTIVATE_PUMP_HANDLER_SEM, 0))
+                if(xSemaphoreTake(FINISH_PUMPING_SEM, 0))
                 {
                     Control_State = Choose_fuel;
-                    xSemaphoreGive(ACTIVATE_PUMP_HANDLER_SEM);
+                    Cash_inserted = 0;
 
                     //Update Log
+                    add_to_log(log_pointer++,
+                               Account_ID,
+                               &Current_Price,
+                               &Amount_Pumped,
+                               &RTC_sek,
+                               &RTC_min,
+                               &RTC_hour,
+                               &Fuel_Type);
+                    clear_sys_ctrl_buffers();
                 }
                 break;
             default:
@@ -265,6 +307,3 @@ void vControl_task(void *pvParameters)
     }
 
 }
-
-
-

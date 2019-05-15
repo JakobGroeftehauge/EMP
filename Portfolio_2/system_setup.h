@@ -41,7 +41,7 @@
 struct log_data{
     INT8U id[16];
     float Price;
-    float litres_pumped;
+    INT16U litres_pumped;
     INT8U Time_sec;
     INT8U Time_min;
     INT8U Time_hour;
@@ -85,9 +85,10 @@ uint8_t log_pointer;
 extern SemaphoreHandle_t MOTOR_ON_SEM;
 extern SemaphoreHandle_t FLOW_ON_SEM;
 extern SemaphoreHandle_t AMOUNT_PUMPED_SEM;
-extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
+//extern SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 extern SemaphoreHandle_t RTC_SEM;
 extern SemaphoreHandle_t FINISH_PUMPING_SEM;
+extern SemaphoreHandle_t INITIATE_PUMPING_SEM;
 /**************************   Task Handles    ******************************/
 
 extern TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
