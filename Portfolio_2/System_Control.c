@@ -43,6 +43,19 @@ enum Controller_States
 
 
 /*************************  Function interfaces ****************************/
+void add_to_log(INT8U log_no,
+                INT8U* id,
+                float* Price,
+                INT16U* litres_pumped,
+                INT8U* Time_sec,
+                INT8U* Time_min,
+                INT8U* Time_hour,
+                INT8U* Fuel_Type
+                )
+{
+    //po_log_data[log_no].id;
+}
+
 void vClear_Array(INT8U *arr, INT8U size)
 {
     INT8U i;
@@ -259,7 +272,7 @@ void vControl_task(void *pvParameters)
                     Control_State = Choose_fuel;
                     xSemaphoreGive(ACTIVATE_PUMP_HANDLER_SEM);
 
-                    //Update Log
+                    po_log_data.//Update Log
                 }
                 break;
             default:
