@@ -79,7 +79,7 @@ void price_calulator_task(void* pvParameters)
 
     case STATE_92:
 
-    Current_Price = (Amount_Pumped/TICK_PER_LITER) * temp_92;
+    Current_Price = ((float)Amount_Pumped/TICK_PER_LITER) * temp_92;
 
     if(Fuel_Type == 0)
     {
@@ -92,7 +92,7 @@ void price_calulator_task(void* pvParameters)
 
     if(Fuel_Type == Fuel_95)
     {
-    Current_Price = (Amount_Pumped/TICK_PER_LITER) * temp_95;
+    Current_Price = ((float)Amount_Pumped/TICK_PER_LITER) * temp_95;
     }
 
     if(Fuel_Type == 0)
@@ -107,7 +107,7 @@ void price_calulator_task(void* pvParameters)
 
     if(Fuel_Type == Fuel_E10)
     {
-    Current_Price = (Amount_Pumped/TICK_PER_LITER) * temp_E10;
+    Current_Price = ((float)Amount_Pumped/TICK_PER_LITER) * temp_E10;
     }
 
     if(Fuel_Type == 0)

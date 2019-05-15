@@ -30,6 +30,7 @@ SemaphoreHandle_t FLOW_ON_SEM;
 SemaphoreHandle_t AMOUNT_PUMPED_SEM;
 SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 SemaphoreHandle_t RTC_SEM;
+SemaphoreHandle_t FINISH_PUMPING_SEM;
 
 TaskHandle_t PUMP_EMULATOR_TASK_HANDLE;
 TaskHandle_t ENCODER_TASK_HANDLE;
@@ -61,10 +62,11 @@ void setup_semaphores()
     MOTOR_ON_SEM = xSemaphoreCreateCounting(1, 0);
     FLOW_ON_SEM = xSemaphoreCreateCounting(1, 0);
     ACTIVATE_PUMP_HANDLER_SEM = xSemaphoreCreateCounting(1,0);
-
+    FINISH_PUMPING_SEM = xSemaphoreCreateCounting(1,0);
     //MUTEXS
     AMOUNT_PUMPED_SEM = xSemaphoreCreateCounting(1, 1);
     RTC_SEM = xSemaphoreCreateCounting(1, 1);
+
 }
 
 void setup_queues()
