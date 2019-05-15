@@ -41,7 +41,7 @@
 struct log_data{
     INT8U id[16];
     float Price;
-    float litres_pumped;
+    INT16U litres_pumped;
     INT8U Time_sec;
     INT8U Time_min;
     INT8U Time_hour;

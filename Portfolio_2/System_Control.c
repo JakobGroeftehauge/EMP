@@ -62,10 +62,14 @@ void Float_to_String(INT8U *arr, float number)
     {
         if(i!=4)
         {
+            if(i==3)
+            {
+                trailing_zero_flag = 1;
+            }
             if(numb/divisor!=0)
             {
                 arr[i]=numb/divisor + '0';
-                trailing_zero_flag = 1;
+
             }
             else if(trailing_zero_flag == 0)
             {
@@ -238,7 +242,7 @@ void vControl_task(void *pvParameters)
                 break;
             case Fueling:
                 Float_to_String(Current_Price_Arr,Current_Price);
-                Float_to_String(Liter_Sum_Arr,Amount_Pumped);
+                Float_to_String(Liter_Sum_Arr,((float)Amount_Pumped/TICK_PER_LITER));
 
                 move_LCD(0,0);
                 wr_str_LCD("Price: ");
