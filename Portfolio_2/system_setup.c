@@ -42,6 +42,8 @@ TaskHandle_t DREHIMPULS_TASK_HANDLE;
 TaskHandle_t LCD_DRIVER_TASK;
 TaskHandle_t KEYBOARD_TASK_HANDLE;
 TaskHandle_t CONTROLLER_TASK_HANDLE;
+TaskHandle_t UARTTX_TASK_HANDLE;
+TaskHandle_t UARTRX_TASK_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
@@ -75,6 +77,8 @@ void setup_queues()
 ******************************************************************************/
 {
     DIGI_SW_QUEUE_HANDLE = xQueueCreate(5, 1);
+    UART_RX_QUEUE_HANDLE = xQueueCreate(10,1);
+    UART_TX_QUEUE_HANDLE = xQueueCreate(10,1);
 }
 
 void init_system_parameter()

@@ -100,6 +100,8 @@ extern TaskHandle_t DREHIMPULS_TASK_HANDLE;
 extern TaskHandle_t LCD_DRIVER_TASK;
 extern TaskHandle_t KEYBOARD_TASK_HANDLE;
 extern TaskHandle_t CONTROLLER_TASK_HANDLE;
+extern TaskHandle_t UARTTX_TASK_HANDLE;
+extern TaskHandle_t UARTRX_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 
