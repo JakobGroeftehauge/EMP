@@ -312,14 +312,13 @@ void vControl_task(void *pvParameters)
                 }
 
                 move_LCD(0,0);
-                wr_str_LCD("Kr/l:");
-                move_LCD(5,0);
+
                 wr_str_LCD(Price_pr_Liter_Arr);
-                move_LCD(7,0);
+                move_LCD(9,0);
                 wr_str_LCD(Current_Price_Arr);
                 move_LCD(0,1);
                 wr_str_LCD("Liter: ");
-                move_LCD(7,1);
+                move_LCD(9,1);
                 wr_str_LCD(Liter_Sum_Arr);
 
                 if(xSemaphoreTake(FINISH_PUMPING_SEM, 0))
