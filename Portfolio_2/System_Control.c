@@ -53,7 +53,7 @@ void add_to_log(INT8U log_no,
                 INT8U* Fuel_Type
                 )
 {
-    for (i=0; i<ACCOUNT_ID_LENGTH;i++)
+    for (uint8_t i=0; i<ACCOUNT_ID_LENGTH;i++)
     {
         po_log_data[log_no].id[i] = id[i];
     }

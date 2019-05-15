@@ -87,18 +87,6 @@ void pump_handler_task(void)
                 }
             break;
 
-//        case PUMP_READY:
-//
-//            if(Hook_Activated == TRUE)
-//            {
-//                state = PUMP_ON_STATE;
-//                time_since_handle_activation = 0;
-//            }
-//            else
-//            {
-//                state = PUMP_OFF_STATE;
-//            }
-//            break;
 
         case PUMP_ON_STATE:
 
@@ -191,21 +179,14 @@ void pump_handler_task(void)
                 //xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
 
             }
-
             break;
-        case FINISH_PUMPING_STATE:
-            Motor_ON = FALSE;
-            Flow_ON = FALSE;
-            xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
-            state = PUMP_OFF_STATE;
 
-            break;
         default:
-            state = PUMP_OFF_STATE;
+            state = IDLE;
             break;
     }
 
-    //vTaskDelay(pdMS_TO_TICKS(5));
+
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(DELAY_TIME));
     }
 }

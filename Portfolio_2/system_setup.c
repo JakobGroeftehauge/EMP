@@ -26,7 +26,7 @@
 
 /*****************************   Variables   *******************************/
 SemaphoreHandle_t AMOUNT_PUMPED_SEM;
-//SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
+SemaphoreHandle_t ACTIVATE_PUMP_HANDLER_SEM;
 SemaphoreHandle_t RTC_SEM;
 SemaphoreHandle_t FINISH_PUMPING_SEM;
 SemaphoreHandle_t INITIATE_PUMPING_SEM;
