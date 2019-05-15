@@ -1,3 +1,4 @@
+
 /*****************************************************************************
 * University of Southern Denmark
 * Embedded Programming (EMP)
@@ -185,7 +186,7 @@ extern void uart0_init( uint32_t baud_rate, uint8_t databits, uint8_t stopbits, 
   GPIO_PORTA_DEN_R   |= 0x00000003;		// enable digital operation of PA0 and PA1
   //GPIO_PORTA_PUR_R   |= 0x00000002;
 
-  BRD = 64000000*5 / baud_rate;   	// X-sys*64/(16*baudrate) = 16M*4/baudrate
+  BRD = 64000000 / baud_rate;   	// X-sys*64/(16*baudrate) = 16M*4/baudrate
   UART0_IBRD_R = BRD / 64;
   UART0_FBRD_R = BRD & 0x0000003F;
 
