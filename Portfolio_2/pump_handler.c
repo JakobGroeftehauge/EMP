@@ -97,7 +97,7 @@ void pump_handler_task(void)
 
             Motor_ON = TRUE;
             Flow_ON = FALSE;
-            Shunt_ON = FALSE;
+            Shunt_ON = TRUE;
 
             time_since_handle_activation++;
 
@@ -130,7 +130,7 @@ void pump_handler_task(void)
             time_since_handle_activation = 0;
             }
 
-            if(amount_pumped_shunt_activated + 0.1 * TICK_PER_LITER >= Amount_Pumped)
+            if((amount_pumped_shunt_activated + 0.1 * TICK_PER_LITER) <= Amount_Pumped)
             {
                 if(Amount_Pumped <= (Amount_to_pump - TICK_PER_LITER*0.1))
                 {
