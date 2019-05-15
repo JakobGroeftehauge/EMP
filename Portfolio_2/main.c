@@ -35,6 +35,7 @@
 #include "key.h"
 #include "System_Control.h"
 #include "uart_protocol.h"
+#include "system_administrator.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -58,7 +59,7 @@ int main(void)
 {
     init_gpio();
     init_system_parameter();
-    uart0_init(9600,8,'o',1);
+    uart0_init(115200,8,'o',1);
     setup_queues();
     //Create semaphores
     setup_semaphores();
@@ -80,6 +81,7 @@ int main(void)
     xTaskCreate(vLCD_task, "LCD driver task", 100, 0, 1, &LCD_DRIVER_TASK);
     xTaskCreate(key_task, "keyboard driver task", 100, 0, 1, &KEYBOARD_TASK_HANDLE);
     xTaskCreate(vControl_task,"Controller task",100, 0, 1, &CONTROLLER_TASK_HANDLE);
+    xTaskCreate(system_administrator_task,"system admin",300, 0, 2, &SYS_ADMIN_TASK_HANDLE);
 
     // Start the scheduler.
     // --------------------

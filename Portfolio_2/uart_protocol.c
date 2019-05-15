@@ -22,7 +22,11 @@ volatile UBaseType_t elementsInQueue            = 0;
 
 
 /*****************************   Constants   *******************************/
-
+//
+//void send_c_UART_q()
+//{
+//
+//}
 
 /*************************  Function interfaces ****************************/
 
@@ -48,7 +52,7 @@ void UARTRX (void * pvParameters)
 
         elementsInQueue = uxQueueMessagesWaiting( UART_RX_QUEUE_HANDLE );
         //vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 50 ) );
-        vTaskDelay(pdMS_TO_TICKS( 50 ));
+        vTaskDelay(pdMS_TO_TICKS( 10 ));
     }
 }
 
@@ -66,7 +70,7 @@ void UARTTX(void *pvParameters)
            }
        }
 
-       vTaskDelay(pdMS_TO_TICKS( 50 ));
+       vTaskDelay(pdMS_TO_TICKS( 10 ));
    }
 }
 

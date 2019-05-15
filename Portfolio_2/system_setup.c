@@ -20,6 +20,7 @@
 /***************************** Include files *******************************/
 #include "system_setup.h"
 #include "FreeRTOS.h"
+#include "System_Control.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -44,6 +45,7 @@ TaskHandle_t KEYBOARD_TASK_HANDLE;
 TaskHandle_t CONTROLLER_TASK_HANDLE;
 TaskHandle_t UARTTX_TASK_HANDLE;
 TaskHandle_t UARTRX_TASK_HANDLE;
+TaskHandle_t SYS_ADMIN_TASK_HANDLE;
 
 QueueHandle_t UART_RX_QUEUE_HANDLE;
 QueueHandle_t UART_TX_QUEUE_HANDLE;
@@ -96,5 +98,36 @@ void init_system_parameter()
     Fuel_Price_95 = 2;
     Fuel_Price_E10 = 2;
     Amount_to_pump = 10000;
+
+    // for testing log
+//    INT8U Account_ID[16] = {'C','A','S','H',0};
+//    INT16U Cash_inserted = 150;
+//    float Current_Price = 12.4;
+//    float litres_pumped = 21.20;
+//    INT8U RTC_sek = 21;
+//    INT8U RTC_min = 31;
+//    INT8U RTC_hour = 13;
+//    INT8U Fuel_Type = '1';
+//
+//    log_pointer = 0;
+//    add_to_log(log_pointer++,
+//               Account_ID,
+//               &Cash_inserted,
+//               &Current_Price,
+//               &litres_pumped,
+//               &RTC_sek,
+//               &RTC_min,
+//               &RTC_hour,
+//               &Fuel_Type
+//               );
+
+
+//    po_log_data[0].Time_hour = 40;
+//    po_log_data[0].Time_min = 22;
+//    po_log_data[0].Time_sec = 01;
+//
+//    po_log_data[0].id[0] = 'C';
+//    po_log_data[0].id[1] = 'A';
+//    po_log_data[0].id[2] = 0;
 }
 /****************************** End Of Module *******************************/

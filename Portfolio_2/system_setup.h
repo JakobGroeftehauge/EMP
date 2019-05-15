@@ -40,8 +40,9 @@
 //Structs
 struct log_data{
     INT8U id[16];
+    INT16U amount_paid;
     float Price;
-    INT16U litres_pumped;
+    float litres_pumped;
     INT8U Time_sec;
     INT8U Time_min;
     INT8U Time_hour;
@@ -102,6 +103,7 @@ extern TaskHandle_t KEYBOARD_TASK_HANDLE;
 extern TaskHandle_t CONTROLLER_TASK_HANDLE;
 extern TaskHandle_t UARTTX_TASK_HANDLE;
 extern TaskHandle_t UARTRX_TASK_HANDLE;
+extern TaskHandle_t SYS_ADMIN_TASK_HANDLE;
 
 /**************************   Queue Handles    ******************************/
 

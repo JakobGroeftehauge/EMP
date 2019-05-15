@@ -20,6 +20,17 @@
 #ifndef SYSTEM_CONTROL_H_
 #define SYSTEM_CONTROL_H_
 
+void add_to_log(INT8U log_no,
+                INT8U* id,
+                INT16U* amount_paid,
+                float* Price,
+                float* litres_pumped,
+                INT8U* Time_sec,
+                INT8U* Time_min,
+                INT8U* Time_hour,
+                INT8U* Fuel_Type
+                );
+
 void vControl_task(void *pvParameters);
 void vClear_Array(INT8U *arr, INT8U size);
 

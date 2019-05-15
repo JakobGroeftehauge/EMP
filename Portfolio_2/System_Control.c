@@ -45,18 +45,21 @@ enum Controller_States
 /*************************  Function interfaces ****************************/
 void add_to_log(INT8U log_no,
                 INT8U* id,
+                INT16U* amount_paid,
                 float* Price,
-                INT16U* litres_pumped,
+                float* litres_pumped,
                 INT8U* Time_sec,
                 INT8U* Time_min,
                 INT8U* Time_hour,
                 INT8U* Fuel_Type
                 )
 {
+    INT8U i;
     for (i=0; i<ACCOUNT_ID_LENGTH;i++)
     {
         po_log_data[log_no].id[i] = id[i];
     }
+    po_log_data[log_no].amount_paid = *amount_paid;
     po_log_data[log_no].Price = *Price;
     po_log_data[log_no].litres_pumped = *litres_pumped;
     po_log_data[log_no].Time_sec = *Time_sec;
@@ -120,6 +123,7 @@ void Float_to_String(INT8U *arr, float number)
 ******************************************************************************/
 void vControl_task(void *pvParameters)
 {
+    float litres_pumped;
     INT8U Control_State = Choose_fuel;
     INT8U key_Receive;
     INT8U Cash_q_receive;
@@ -165,6 +169,11 @@ void vControl_task(void *pvParameters)
                     {
                         Control_State = Cash;
                         xQueueReset(DIGI_SW_QUEUE_HANDLE);
+                        Account_ID[0] = 'C';
+                        Account_ID[1] = 'A';
+                        Account_ID[2] = '$';
+                        Account_ID[3] = 'H';
+                        Account_ID[4] = '0';
                         clear_LCD();
                     }
                     else if(key_Receive == ACCOUNT)
@@ -288,10 +297,12 @@ void vControl_task(void *pvParameters)
                     xSemaphoreGive(FINISH_PUMPING_SEM);
 
                     //Update Log
+                    litres_pumped = (float)Amount_Pumped/TICK_PER_LITER;
                     add_to_log(log_pointer++,
                                Account_ID,
+                               &Cash_inserted,
                                &Current_Price,
-                               &Amount_Pumped,
+                               &litres_pumped,
                                &RTC_sek,
                                &RTC_min,
                                &RTC_hour,
