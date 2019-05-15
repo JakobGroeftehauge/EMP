@@ -273,7 +273,7 @@ void vControl_task(void *pvParameters)
                     Cash_inserted = 0;
 
 
-                    po_log_data.//Update Log
+                    //po_log_data.//Update Log
                 }
                 break;
             default:

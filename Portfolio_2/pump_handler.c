@@ -142,6 +142,12 @@ void pump_handler_task(void)
 
             }
 
+            if(Amount_Pumped >= Amount_to_pump)
+            {
+                state = FINISH_PUMPING_STATE;
+                xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+            }
+
             break;
 
         case PUMPING_SHUNT_OFF_STATE:
@@ -162,6 +168,7 @@ void pump_handler_task(void)
                 amount_pumped_shunt_activated = Amount_Pumped;
                 xSemaphoreGive(AMOUNT_PUMPED_SEM);
                 state = FINISH_PUMPING_STATE;
+                xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
 
             }
 
@@ -169,7 +176,9 @@ void pump_handler_task(void)
         case FINISH_PUMPING_STATE:
             Motor_ON = FALSE;
             Flow_ON = FALSE;
-            xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+            //xSemaphoreGive(FINISH_PUMPING_SEM); //Signal to the the UI task that the refueling has ended.
+            state = PUMP_OFF_STATE;
+            Amount_to_pump = 0;
             break;
         default:
             state = PUMP_OFF_STATE;
