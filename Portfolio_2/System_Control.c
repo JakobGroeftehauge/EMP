@@ -28,7 +28,8 @@ enum Controller_States
 #define ACCOUNT     '2'
 
 #define CONTINUE    '#'
-#define ACCOUNT_ID_LENGTH 16
+#define ACCOUNT_ID_LENGTH 6
+#define PASSWORD_LENGTH 4
 
 #define MAX_BALANCE         9999
 #define MAX_BALANCE_LENGTH  7
@@ -128,10 +129,10 @@ void vControl_task(void *pvParameters)
     INT8U Cash_q_receive;
     INT16U Cash_inserted = 0;
     INT8U Account_ID[ACCOUNT_ID_LENGTH+1];
-    INT8U Password_text[ACCOUNT_ID_LENGTH+1];
+    INT8U Password_text[PASSWORD_LENGTH+1];
     INT8U Current_Price_Arr[MAX_BALANCE_LENGTH+1];
     INT8U Liter_Sum_Arr[MAX_BALANCE_LENGTH+1];
-    vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
+    vClear_Array(Account_ID,PASSWORD_LENGTH+1);
     vClear_Array(Password_text,ACCOUNT_ID_LENGTH+1);
     vClear_Array(Current_Price_Arr,MAX_BALANCE_LENGTH+1);
     vClear_Array(Liter_Sum_Arr,MAX_BALANCE_LENGTH+1);
@@ -174,6 +175,8 @@ void vControl_task(void *pvParameters)
                     else if(key_Receive == ACCOUNT)
                     {
                         Control_State = Account;
+                        vClear_Array(Password_text,PASSWORD_LENGTH+1);
+                        vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
                         clear_LCD();
                     }
 
@@ -227,10 +230,17 @@ void vControl_task(void *pvParameters)
                         }
                         else
                         {
-                            vClear_Array(Account_ID,ACCOUNT_ID_LENGTH);
+                            vClear_Array(Account_ID,ACCOUNT_ID_LENGTH+1);
                             i=0;
                             clear_LCD();
                         }
+
+                    }
+                    else if(i<ACCOUNT_ID_LENGTH)
+                    {
+                        Control_State = Choose_fuel;
+                        i = 0;
+                        clear_LCD();
 
                     }
                     else //Add check for account
@@ -249,7 +259,7 @@ void vControl_task(void *pvParameters)
                 {
                     if(key_Receive != CONTINUE)
                     {
-                        if(i<16)
+                        if(i<PASSWORD_LENGTH)
                         {
 
                             Password_text[i]=key_Receive;
@@ -259,10 +269,18 @@ void vControl_task(void *pvParameters)
                         }
                         else
                         {
-                            vClear_Array(Password_text,ACCOUNT_ID_LENGTH);
                             i=0;
                             clear_LCD();
+                            vClear_Array(Password_text,PASSWORD_LENGTH+1);
+
                         }
+                    }
+                    else if(i<PASSWORD_LENGTH)
+                    {
+                        Control_State = Choose_fuel;
+                        i = 0;
+                        clear_LCD();
+
                     }
                     else //Add check for Password
                     {
