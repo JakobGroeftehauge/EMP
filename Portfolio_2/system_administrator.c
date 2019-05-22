@@ -184,7 +184,7 @@ void write_fuel_price(INT8U log_no)
 void write_amount_paid(INT8U log_no)
 {
     INT8U c;
-    c = po_log_data[log_no].amount_paid/10 + '0';
+    c = (INT16U)po_log_data[log_no].amount_paid/10 + '0';
     xQueueSend(UART_TX_QUEUE_HANDLE, &c, (TickType_t) 20);
 
     c = (INT16U)po_log_data[log_no].amount_paid%10 + '0';

@@ -96,9 +96,9 @@ void init_system_parameter()
     Motor_ON = 0;
     Flow_ON = 0;
     Shunt_ON = 0;
-    Fuel_Price_92 = 2;
-    Fuel_Price_95 = 2;
-    Fuel_Price_E10 = 2;
+    Fuel_Price_92 = 9.43;
+    Fuel_Price_95 = 11.3;
+    Fuel_Price_E10 = 14.5;
 
     Operating_time = 0;
 
